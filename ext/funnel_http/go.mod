@@ -1,4 +1,4 @@
-module github.com/username/funnel_http
+module github.com/sue445/funnel_http
 
 go 1.23.2
 
