@@ -36,6 +36,10 @@ Gem::Specification.new do |spec|
   # spec.add_dependency "example-gem", "~> 1.0"
   spec.add_dependency "go_gem", "~> 0.2"
 
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rake-compiler"
+  spec.add_development_dependency "rspec"
+
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
 end
