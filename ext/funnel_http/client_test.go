@@ -1,12 +1,32 @@
 package main_test
 
 import (
+	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"github.com/sue445/funnel_http"
+	"net/http"
 	"testing"
 )
 
 func TestRunRequests(t *testing.T) {
+	httpmock.Activate()
+	t.Cleanup(httpmock.DeactivateAndReset)
+
+	httpmock.RegisterResponder("GET", "http://example.com/1",
+		func(req *http.Request) (*http.Response, error) {
+			resp := httpmock.NewStringResponse(200, "GET http://example.com/1")
+
+			resp.Header.Set("Content-Type", "text/plain")
+
+			for key, values := range req.Header {
+				for _, value := range values {
+					resp.Header.Add(key, value)
+				}
+			}
+
+			return resp, nil
+		})
+
 	tests := []struct {
 		name     string
 		requests []main.Request
@@ -26,8 +46,11 @@ func TestRunRequests(t *testing.T) {
 			expected: []main.Response{
 				{
 					StatusCode: 200,
-					Body:       "GET http://example.com/1",
-					Header:     map[string][]string{},
+					Body:       []byte("GET http://example.com/1"),
+					Header: map[string][]string{
+						"Content-Type":        {"text/plain"},
+						"X-My-Request-Header": {"a", "b"},
+					},
 				},
 			},
 		},
