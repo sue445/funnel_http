@@ -15,6 +15,10 @@ Rake::ExtensionTask.new("funnel_http", GEMSPEC) do |ext|
   ext.lib_dir = "lib/funnel_http"
 end
 
+# TODO: WIP
+require_relative "./tasks/rake_task"
+RakeTask.new("funnel_http")
+
 namespace :rbs do
   desc "`rbs collection install` and `git commit`"
   task :install do
@@ -30,4 +34,4 @@ task :rbs do
   sh "steep check"
 end
 
-task default: %i[clobber compile spec]
+task default: %i[clobber compile spec go:test]
