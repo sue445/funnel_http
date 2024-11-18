@@ -34,4 +34,4 @@ task :rbs do
   sh "steep check"
 end
 
-task default: %i[clobber compile spec]
+task default: %i[clobber compile spec go:test]
