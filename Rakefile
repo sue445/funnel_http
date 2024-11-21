@@ -15,9 +15,21 @@ Rake::ExtensionTask.new("funnel_http", GEMSPEC) do |ext|
   ext.lib_dir = "lib/funnel_http"
 end
 
-# TODO: WIP
-require_relative "./tasks/rake_task"
-RakeTask.new("funnel_http")
+require "go_gem/rake_task"
+
+go_task = GoGem::RakeTask.new("funnel_http")
+
+namespace :go do
+  desc "Run golangci-lint"
+  task :lint do
+    go_task.within_target_dir do
+      sh "which golangci-lint" do |ok, _|
+        raise "golangci-lint isn't installed. See. https://golangci-lint.run/welcome/install/" unless ok
+      end
+      sh GoGem::RakeTask.build_env_vars, "golangci-lint run"
+    end
+  end
+end
 
 namespace :rbs do
   desc "`rbs collection install` and `git commit`"
