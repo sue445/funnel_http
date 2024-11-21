@@ -21,11 +21,15 @@ func rb_funnel_http_sum(_ C.VALUE, a C.VALUE, b C.VALUE) C.VALUE {
 	return C.VALUE(ruby.LONG2NUM(sum))
 }
 
+// revive:disable:exported
+
 //export Init_funnel_http
 func Init_funnel_http() {
 	rb_mFunnelHttp := ruby.RbDefineModule("FunnelHttp")
 	ruby.RbDefineSingletonMethod(rb_mFunnelHttp, "sum", C.rb_funnel_http_sum, 2)
 }
+
+// revive:enable:exported
 
 func main() {
 }

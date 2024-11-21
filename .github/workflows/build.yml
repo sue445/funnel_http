@@ -81,10 +81,44 @@ jobs:
           status: ${{ job.status }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK }}
 
+  golangci-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ext/funnel_http/go.mod
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+
+      - name: export CGO_CFLAGS
+        run: ruby -e "puts %Q(CGO_CFLAGS=-I#{RbConfig::CONFIG['rubyarchhdrdir']} -I#{RbConfig::CONFIG['rubyhdrdir']})" >> $GITHUB_ENV
+
+      - run: echo $CGO_CFLAGS
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.60
+          working-directory: ext/funnel_http/
+
+      - name: Slack Notification (not success)
+        uses: act10ns/slack@v2
+        if: "! success()"
+        continue-on-error: true
+        with:
+          status: ${{ job.status }}
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+
   notify:
     needs:
       - test
       - rbs
+      - golangci-lint
 
     runs-on: ubuntu-latest
 

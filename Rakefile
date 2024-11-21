@@ -29,6 +29,13 @@ namespace :go do
       sh GoGem::RakeTask.build_env_vars, "golangci-lint run"
     end
   end
+
+  desc "Run go mod tidy"
+  task :mod_tidy do
+    go_task.within_target_dir do
+      sh "go mod tidy"
+    end
+  end
 end
 
 namespace :rbs do
