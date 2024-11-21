@@ -64,9 +64,7 @@ func RunRequests(requests []Request) ([]Response, error) {
 			responses[i].Header = map[string][]string{}
 
 			for key, values := range httpResp.Header {
-				for _, value := range values {
-					responses[i].Header[key] = append(responses[i].Header[key], value)
-				}
+				responses[i].Header[key] = append(responses[i].Header[key], values...)
 			}
 
 			return nil
