@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"github.com/cockroachdb/errors"
 	"golang.org/x/sync/errgroup"
 	"io"
 	"net/http"
@@ -37,7 +38,7 @@ func RunRequests(requests []Request) ([]Response, error) {
 			var body []byte
 			httpReq, err := http.NewRequest(request.Method, request.URL, bytes.NewBuffer(body))
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			for key, values := range request.Header {
@@ -48,7 +49,7 @@ func RunRequests(requests []Request) ([]Response, error) {
 
 			httpResp, err := httpClient.Do(httpReq)
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 			defer httpResp.Body.Close()
 
@@ -56,7 +57,7 @@ func RunRequests(requests []Request) ([]Response, error) {
 
 			buf, err := io.ReadAll(httpResp.Body)
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			responses[i].Body = buf
@@ -73,7 +74,7 @@ func RunRequests(requests []Request) ([]Response, error) {
 	}
 
 	if err := g.Wait(); err != nil {
-		return []Response{}, err
+		return []Response{}, errors.WithStack(err)
 	}
 
 	return responses, nil
