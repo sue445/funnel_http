@@ -27,6 +27,21 @@ func TestRunRequests(t *testing.T) {
 			return resp, nil
 		})
 
+	httpmock.RegisterResponder("GET", "http://example.com/2",
+		func(req *http.Request) (*http.Response, error) {
+			resp := httpmock.NewStringResponse(200, "GET http://example.com/2")
+
+			resp.Header.Set("Content-Type", "text/plain")
+
+			for key, values := range req.Header {
+				for _, value := range values {
+					resp.Header.Add(key, value)
+				}
+			}
+
+			return resp, nil
+		})
+
 	tests := []struct {
 		name     string
 		requests []main.Request
@@ -50,6 +65,43 @@ func TestRunRequests(t *testing.T) {
 					Header: map[string][]string{
 						"Content-Type":        {"text/plain"},
 						"X-My-Request-Header": {"a", "b"},
+					},
+				},
+			},
+		},
+		{
+			name: "multiple requests",
+			requests: []main.Request{
+				{
+					Method: "GET",
+					URL:    "http://example.com/1",
+					Header: map[string][]string{
+						"X-My-Request-Header": {"a", "b"},
+					},
+				},
+				{
+					Method: "GET",
+					URL:    "http://example.com/2",
+					Header: map[string][]string{
+						"X-My-Request-Header": {"c", "d"},
+					},
+				},
+			},
+			expected: []main.Response{
+				{
+					StatusCode: 200,
+					Body:       []byte("GET http://example.com/1"),
+					Header: map[string][]string{
+						"Content-Type":        {"text/plain"},
+						"X-My-Request-Header": {"a", "b"},
+					},
+				},
+				{
+					StatusCode: 200,
+					Body:       []byte("GET http://example.com/2"),
+					Header: map[string][]string{
+						"Content-Type":        {"text/plain"},
+						"X-My-Request-Header": {"c", "d"},
 					},
 				},
 			},
