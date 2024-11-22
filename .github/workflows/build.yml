@@ -42,6 +42,7 @@ jobs:
           bundle update --jobs $(nproc) --retry 3
 
       - run: bundle exec rake
+      - run: bundle exec rake go:testrace
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@v2
