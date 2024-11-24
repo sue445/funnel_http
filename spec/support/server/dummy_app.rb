@@ -4,7 +4,9 @@ require "puma"
 class DummyApp < Sinatra::Base
   get "/get" do
     content_type "text/plain"
-    response["X-Test-Header"] = request.env["X-Test-Header"] if request.env.key?("X-Test-Header")
+
+    http_headers = request.env.select { |k, v| k.start_with?("HTTP_") }
+    response["X-Request-Headers"] = http_headers.to_s
 
     "/get"
   end

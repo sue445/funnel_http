@@ -11,12 +11,12 @@ RSpec.describe FunnelHttp::Client do
     let(:requests) do
       [
         {
-          method: :get,
+          method: "GET",
           url: "#{test_server}/get",
           header: {"X-Test-Header" => ["a", "b"]}
         },
         {
-          method: :get,
+          method: "GET",
           url: "#{test_server}/get",
           header: {"X-Test-Header" => ["c", "d"]}
         },
@@ -28,31 +28,19 @@ RSpec.describe FunnelHttp::Client do
     describe "[0]" do
       subject { responses[0] }
 
-      let(:response_header) do
-        {
-          "Content-Type" => "text/plain",
-          "X-Test-Header" => ["a", "b"],
-        }
-      end
-
-      its(:status_code) { should eq 200 }
-      its(:body) { should eq "/get" }
-      its(:header) { should eq response_header }
+      its([:status_code]) { should eq 200 }
+      its([:body]) { should eq "/get" }
+      its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
+      its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
     end
 
     describe "[1]" do
       subject { responses[1] }
 
-      let(:response_header) do
-        {
-          "Content-Type" => "text/plain",
-          "X-Test-Header" => ["c", "d"],
-        }
-      end
-
-      its(:status_code) { should eq 200 }
-      its(:body) { should eq "/get" }
-      its(:header) { should eq response_header }
+      its([:status_code]) { should eq 200 }
+      its([:body]) { should eq "/get" }
+      its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
+      its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"c, d"')]) }
     end
   end
 end

@@ -14,7 +14,7 @@ module FunnelHttp
     # @return [String] `:body` Response body
     # @return [Hash{String, => String, Array<String>}] `:header` Response header
     def perform(requests)
-      []
+      FunnelHttp.run_requests(requests)
     end
   end
 end
