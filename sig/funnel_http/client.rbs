@@ -1,0 +1,14 @@
+module FunnelHttp
+  class Client
+    def perform: (
+      Array[{
+        method: String | Symbol,
+        url: String,
+        header: Hash[String, String | Array[String]]
+      }] requests) -> Array[{
+        status_code: Integer,
+        body: String,
+        header: Hash[String, Array[String]]
+      }]
+  end
+end

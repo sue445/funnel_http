@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 require "funnel_http"
+require "rspec/its"
+
+Dir["#{__dir__}/support/**/*.rb"].each {|f| require f }
+
+ENV["TEST_SERVER_PORT"] ||= "8080"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -12,4 +17,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+end
+
+def spec_dir
+  Pathname(__dir__)
 end
