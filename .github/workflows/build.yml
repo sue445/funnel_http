@@ -44,7 +44,10 @@ jobs:
 
       - run: bundle exec rake clobber
       - run: bundle exec rake compile
+
       - run: bundle exec rake spec
+        timeout-minutes: 3 # Workaround for hung-up
+
       - run: bundle exec rake go:test
       - run: bundle exec rake go:testrace
 
