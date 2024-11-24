@@ -40,7 +40,7 @@ func rb_funnel_run_requests(_ C.VALUE, rbAry C.VALUE) C.VALUE {
 
 	responses, err := RunRequests(requests)
 	if err != nil {
-		ruby.RbRaise(rb_cFunnelHttpError, err.Error())
+		ruby.RbRaise(rb_cFunnelHttpError, "%s", err.Error())
 	}
 
 	var rbHashSlice []ruby.VALUE
