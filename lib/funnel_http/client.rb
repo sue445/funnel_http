@@ -12,7 +12,7 @@ module FunnelHttp
     # @return [Array<Hash<Symbol, Object>>] `Array` of following `Hash`
     # @return [Integer] `:status_code`
     # @return [String] `:body` Response body
-    # @return [Hash{String, => String, Array<String>}] `:header` Response header
+    # @return [Hash{String, => Array<String>}] `:header` Response header
     def perform(requests)
       FunnelHttp.run_requests(requests)
     end
