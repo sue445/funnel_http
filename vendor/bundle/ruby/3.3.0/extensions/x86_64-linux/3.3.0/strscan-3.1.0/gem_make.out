@@ -1,0 +1,20 @@
+current directory: /home/runner/work/funnel_http/funnel_http/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+/opt/hostedtoolcache/Ruby/3.3.6/x64/bin/ruby extconf.rb
+checking for onig_region_memsize() in ruby.h... yes
+checking for rb_reg_onig_match() in ruby.h... yes
+creating Makefile
+
+current directory: /home/runner/work/funnel_http/funnel_http/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20241117-1580-zbrr93 sitelibdir\=./.gem.20241117-1580-zbrr93 clean
+
+current directory: /home/runner/work/funnel_http/funnel_http/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20241117-1580-zbrr93 sitelibdir\=./.gem.20241117-1580-zbrr93
+compiling strscan.c
+linking shared-object strscan.so
+
+current directory: /home/runner/work/funnel_http/funnel_http/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20241117-1580-zbrr93 sitelibdir\=./.gem.20241117-1580-zbrr93 install
+/usr/bin/install -c -m 0755 strscan.so ./.gem.20241117-1580-zbrr93
+
+current directory: /home/runner/work/funnel_http/funnel_http/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20241117-1580-zbrr93 sitelibdir\=./.gem.20241117-1580-zbrr93 clean
