@@ -2,6 +2,11 @@
 
 require "funnel_http"
 require "rspec/its"
+require "sinatra"
+
+Dir["#{__dir__}/support/**/*.rb"].each {|f| require f }
+
+ENV["TEST_SERVER_PORT"] ||= "8080"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
