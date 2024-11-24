@@ -6,7 +6,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 0c458c0f40aede6c24a083d5d6bd5e7d0fb93d6c
+    revision: 6cbb0d2b0240b4989e1ade8f878805c927df59e5
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
@@ -14,7 +14,7 @@ gems:
   source:
     type: stdlib
 - name: go_gem
-  version: 0.2.4
+  version: 0.4.0
   source:
     type: rubygems
 - name: rake
@@ -22,7 +22,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 0c458c0f40aede6c24a083d5d6bd5e7d0fb93d6c
+    revision: 6cbb0d2b0240b4989e1ade8f878805c927df59e5
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 gemfile_lock_path: Gemfile.lock
