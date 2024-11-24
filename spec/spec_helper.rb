@@ -2,7 +2,6 @@
 
 require "funnel_http"
 require "rspec/its"
-require "sinatra"
 
 Dir["#{__dir__}/support/**/*.rb"].each {|f| require f }
 

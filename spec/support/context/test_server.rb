@@ -1,3 +1,6 @@
+require "sinatra"
+require "puma"
+
 class TestServer < Sinatra::Base
   get "/get" do
     content_type "text/plain"
@@ -9,14 +12,19 @@ end
 
 RSpec.shared_examples :test_server do
   before(:all) do
+    app = TestServer.new
+    @server = Puma::Server.new(app, nil, min_threads: 2, max_threads: 5)
+    @server.add_tcp_listener("127.0.0.1", ENV["TEST_SERVER_PORT"])
+
     @server_thread = Thread.new do
-      TestServer.run!(port: ENV["TEST_SERVER_PORT"])
+      @server.run
     end
 
     sleep 1
   end
 
   after(:all) do
+    @server.stop(true)
     @server_thread.kill
   end
 
