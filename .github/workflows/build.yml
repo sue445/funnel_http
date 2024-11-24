@@ -110,6 +110,7 @@ jobs:
         with:
           version: v1.60
           working-directory: ext/funnel_http/
+          args: --timeout=5m
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@v2
