@@ -1,6 +1,14 @@
 ---
 path: ".gem_rbs_collection"
 gems:
+- name: base64
+  version: '0'
+  source:
+    type: stdlib
+- name: cgi
+  version: '0'
+  source:
+    type: stdlib
 - name: diff-lcs
   version: '1.5'
   source:
@@ -17,6 +25,22 @@ gems:
   version: 0.4.0
   source:
     type: rubygems
+- name: logger
+  version: '0'
+  source:
+    type: stdlib
+- name: monitor
+  version: '0'
+  source:
+    type: stdlib
+- name: rack
+  version: '2.2'
+  source:
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 6cbb0d2b0240b4989e1ade8f878805c927df59e5
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
 - name: rake
   version: '13.0'
   source:
@@ -25,4 +49,20 @@ gems:
     revision: 6cbb0d2b0240b4989e1ade8f878805c927df59e5
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: sinatra
+  version: '4.0'
+  source:
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 6cbb0d2b0240b4989e1ade8f878805c927df59e5
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
+- name: tempfile
+  version: '0'
+  source:
+    type: stdlib
+- name: uri
+  version: '0'
+  source:
+    type: stdlib
 gemfile_lock_path: Gemfile.lock
