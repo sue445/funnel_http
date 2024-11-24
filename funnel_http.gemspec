@@ -39,11 +39,15 @@ Gem::Specification.new do |spec|
   spec.add_dependency "go_gem", "~> 0.3"
 
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rackup"
   spec.add_development_dependency "rake-compiler"
   spec.add_development_dependency "redcarpet"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec-its"
+  spec.add_development_dependency "sinatra"
   spec.add_development_dependency "steep"
   spec.add_development_dependency "yard"
+  spec.add_development_dependency "webrick"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
