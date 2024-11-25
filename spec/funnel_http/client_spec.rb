@@ -44,5 +44,51 @@ RSpec.describe FunnelHttp::Client do
         its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"c, d"')]) }
       end
     end
+
+    context "with symbol method" do
+      let(:requests) do
+        [
+          {
+            method: :get,
+            url: "#{test_server}/get",
+            header: {"X-Test-Header" => ["a", "b"]}
+          },
+        ]
+      end
+
+      its(:count) { should eq 1 }
+
+      describe "[0]" do
+        subject { responses[0] }
+
+        its([:status_code]) { should eq 200 }
+        its([:body]) { should eq "/get" }
+        its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
+        its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
+      end
+    end
+
+    context "with lower method" do
+      let(:requests) do
+        [
+          {
+            method: "get",
+            url: "#{test_server}/get",
+            header: {"X-Test-Header" => ["a", "b"]}
+          },
+        ]
+      end
+
+      its(:count) { should eq 1 }
+
+      describe "[0]" do
+        subject { responses[0] }
+
+        its([:status_code]) { should eq 200 }
+        its([:body]) { should eq "/get" }
+        its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
+        its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
+      end
+    end
   end
 end
