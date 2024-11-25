@@ -54,19 +54,27 @@ module FunnelHttp
       requests.map do |request|
         raise ArgumentError, "#{arg} contains something other than Hash" unless request.is_a?(Hash)
 
-        request = request.transform_keys(&:to_sym)
-        raise ArgumentError, "#{arg} key does not contain all :method and :url" unless %i(method url).all? { |key| request.key?(key) }
+        raise ArgumentError, "#{arg} key does not contain all :method and :url" if !request.key?(:method) || !request.key?(:url)
 
-        request[:method] = request[:method].to_s.upcase
-
-        request[:header] ||= {}
-        request[:header] =
-          request[:header].each_with_object({}) do |(k, v), hash|
-            hash[k] = Array(v)
-          end
-
-        request
+        {
+          url: request[:url].to_s,
+          method: request[:method].to_s.upcase,
+          header: normalize_header(request[:header]),
+        }
       end
     end
+
+    # @param header [Hash{String, => String, Array<String>}, nil] Request header
+    # @return [Hash{String, => Array<String>}] Request header
+    def self.normalize_header(header)
+      return {} unless header
+
+      header.each_with_object({}) do |(k, v), hash|
+        # FIXME: Fails `steep check` when use Array(v)...
+        # hash[k] = Array(v)
+        hash[k] = v.is_a?(Array) ? v : Array(v)
+      end
+    end
+    private_class_method :normalize_header
   end
 end
