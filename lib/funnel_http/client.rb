@@ -21,7 +21,7 @@ module FunnelHttp
     # @return [String] `:body` Response body
     # @return [Hash{String, => Array<String>}] `:header` Response header
     def perform(requests)
-      FunnelHttp.run_requests(requests)
+      FunnelHttp.run_requests(Client.normalize_requests(requests))
     end
 
     # @overload normalize_requests(arg)
