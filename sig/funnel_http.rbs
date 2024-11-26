@@ -4,17 +4,30 @@ module FunnelHttp
   class Error < StandardError
   end
 
+  type fuzzy_header = Hash[String, String | Array[String]]
+
+  type fuzzy_request = {
+    method: String | Symbol,
+    url: String,
+    header: fuzzy_header?
+  }
+
+  type strict_header = Hash[String, Array[String]]
+
+  type strict_request = {
+    method: String,
+    url: String,
+    header: strict_header
+  }
+
+  type response = {
+    status_code: Integer,
+    body: String,
+    header: strict_header
+  }
+
   # defined in ext/funnel_http/funnel_http.go
-  def self.run_requests: (
-    Array[{
-      method: String | Symbol,
-      url: String,
-      header: Hash[String, String | Array[String]]
-    }] requests) -> Array[{
-      status_code: Integer,
-      body: String,
-      header: Hash[String, Array[String]]
-    }]
+  def self.run_requests: (Array[strict_request] requests) -> Array[response]
 
   # See the writing guide of rbs: https://github.com/ruby/rbs#guides
 end

@@ -20,3 +20,5 @@ gems:
     ignore: true
   - name: yard
     ignore: true
+  - name: funnel_http
+    ignore: true
