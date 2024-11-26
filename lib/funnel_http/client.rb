@@ -6,15 +6,15 @@ module FunnelHttp
     #
     # @overload perform(requests)
     #   @param requests [Array<Hash{String => String}>] `Array` of following `Hash`
-    #   @option requests :method [String, Symbol] Request method (e.g. `:get`, `"POST"`)
-    #   @option requests :url [String] Request url
-    #   @option requests :header [Hash{String, => String, Array<String>}] Request header
+    #   @option requests :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
+    #   @option requests :url [String] **[required]** Request url
+    #   @option requests :header [Hash{String, => String, Array<String>}, nil] Request header
     #
     # @overload perform(request)
     #   @param request [Hash{String => String}]
-    #   @option request :method [String, Symbol] Request method (e.g. `:get`, `"POST"`)
-    #   @option request :url [String] Request url
-    #   @option request :header [Hash{String, => String, Array<String>}] Request header
+    #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
+    #   @option request :url [String] **[required]** Request url
+    #   @option request :header [Hash{String, => String, Array<String>}, nil] Request header
     #
     # @return [Array<Hash<Symbol, Object>>] `Array` of following `Hash`
     # @return [Integer] `:status_code`
@@ -24,17 +24,17 @@ module FunnelHttp
       FunnelHttp.run_requests(Client.normalize_requests(requests))
     end
 
-    # @overload normalize_requests(arg)
+    # @overload normalize_requests(requests)
     #   @param requests [Array<Hash{String => String}>] `Array` of following `Hash`
-    #   @option requests :method [String, Symbol] Request method (e.g. `:get`, `"POST"`)
-    #   @option requests :url [String] Request url
-    #   @option requests :header [Hash{String, => String, Array<String>}] Request header
+    #   @option requests :method [String, Symbol]  **[required]** Request method (e.g. `:get`, `"POST"`)
+    #   @option requests :url [String] **[required]** Request url
+    #   @option requests :header [Hash{String, => String, Array<String>}, nil] Request header
     #
-    # @overload normalize_requests(arg)
+    # @overload normalize_requests(request)
     #   @param request [Hash{String => String}]
-    #   @option request :method [String, Symbol] Request method (e.g. `:get`, `"POST"`)
-    #   @option request :url [String] Request url
-    #   @option request :header [Hash{String, => String, Array<String>}] Request header
+    #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
+    #   @option request :url [String] **[required]** Request url
+    #   @option request :header [Hash{String, => String, Array<String>}, nil] Request header
     #
     # @return [Array<Hash{String => String}>] `Array` of following `Hash`
     # @return [String] `:method` Request method (e.g. `"POST"`)
