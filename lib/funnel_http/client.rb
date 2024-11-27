@@ -8,13 +8,13 @@ module FunnelHttp
     #   @param requests [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
     #   @option requests :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option requests :url [String] **[required]** Request url
-    #   @option requests :header [Hash{String, => String, Array<String>}, nil] Request header
+    #   @option requests :header [Hash{String => String, Array<String>}, nil] Request header
     #
     # @overload perform(request)
     #   @param request [Hash{Symbol => Object}]
     #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option request :url [String] **[required]** Request url
-    #   @option request :header [Hash{String, => String, Array<String>}, nil] Request header
+    #   @option request :header [Hash{String => String, Array<String>}, nil] Request header
     #
     # @return [Array<Hash<Symbol => Object>>] `Array` of following `Hash`
     # @return [Integer] `:status_code`
@@ -28,13 +28,13 @@ module FunnelHttp
     #   @param requests [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
     #   @option requests :method [String, Symbol]  **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option requests :url [String] **[required]** Request url
-    #   @option requests :header [Hash{String, => String, Array<String>}, nil] Request header
+    #   @option requests :header [Hash{String => String, Array<String>}, nil] Request header
     #
     # @overload normalize_requests(request)
     #   @param request [Hash{Symbol => Object}]
     #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option request :url [String] **[required]** Request url
-    #   @option request :header [Hash{String, => String, Array<String>}, nil] Request header
+    #   @option request :header [Hash{String => String, Array<String>}, nil] Request header
     #
     # @return [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
     # @return [String] `:method` Request method (e.g. `"POST"`)
@@ -64,8 +64,8 @@ module FunnelHttp
       end
     end
 
-    # @param header [Hash{String, => String, Array<String>}, nil] Request header
-    # @return [Hash{String, => Array<String>}] Request header
+    # @param header [Hash{String => String, Array<String>}, nil] Request header
+    # @return [Hash{String => Array<String>}] Request header
     def self.normalize_header(header)
       return {} unless header
 
