@@ -92,8 +92,8 @@ RSpec.describe FunnelHttp::Client do
     end
   end
 
-  describe ".normalize_requests" do
-    subject { FunnelHttp::Client.normalize_requests(arg) }
+  describe "#normalize_requests" do
+    subject { client.normalize_requests(arg) }
 
     context "arg is Hash" do
       let(:arg) do

@@ -21,7 +21,7 @@ module FunnelHttp
     # @return [String] `:body` Response body
     # @return [Hash{String => Array<String>}] `:header` Response header
     def perform(requests)
-      FunnelHttp.run_requests(Client.normalize_requests(requests))
+      FunnelHttp.run_requests(normalize_requests(requests))
     end
 
     # @overload normalize_requests(requests)
@@ -40,7 +40,7 @@ module FunnelHttp
     # @return [String] `:method` Request method (e.g. `"POST"`)
     # @return [String] `:url` Request url
     # @return [Hash{String => Array<String>}] `:header` Request header
-    def self.normalize_requests(arg)
+    def normalize_requests(arg)
       requests =
         case arg
         when Array
@@ -64,9 +64,11 @@ module FunnelHttp
       end
     end
 
+    private
+
     # @param header [Hash{String => String, Array<String>}, nil] Request header
     # @return [Hash{String => Array<String>}] Request header
-    def self.normalize_header(header)
+    def normalize_header(header)
       return {} unless header
 
       header.each_with_object({}) do |(k, v), hash|
@@ -75,6 +77,5 @@ module FunnelHttp
         hash[k] = v.is_a?(Array) ? v : Array(v)
       end
     end
-    private_class_method :normalize_header
   end
 end
