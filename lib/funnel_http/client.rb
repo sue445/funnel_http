@@ -5,41 +5,41 @@ module FunnelHttp
     # perform HTTP requests in parallel
     #
     # @overload perform(requests)
-    #   @param requests [Array<Hash{String => String}>] `Array` of following `Hash`
+    #   @param requests [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
     #   @option requests :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option requests :url [String] **[required]** Request url
     #   @option requests :header [Hash{String, => String, Array<String>}, nil] Request header
     #
     # @overload perform(request)
-    #   @param request [Hash{String => String}]
+    #   @param request [Hash{Symbol => Object}]
     #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option request :url [String] **[required]** Request url
     #   @option request :header [Hash{String, => String, Array<String>}, nil] Request header
     #
-    # @return [Array<Hash<Symbol, Object>>] `Array` of following `Hash`
+    # @return [Array<Hash<Symbol => Object>>] `Array` of following `Hash`
     # @return [Integer] `:status_code`
     # @return [String] `:body` Response body
-    # @return [Hash{String, => Array<String>}] `:header` Response header
+    # @return [Hash{String => Array<String>}] `:header` Response header
     def perform(requests)
       FunnelHttp.run_requests(Client.normalize_requests(requests))
     end
 
     # @overload normalize_requests(requests)
-    #   @param requests [Array<Hash{String => String}>] `Array` of following `Hash`
+    #   @param requests [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
     #   @option requests :method [String, Symbol]  **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option requests :url [String] **[required]** Request url
     #   @option requests :header [Hash{String, => String, Array<String>}, nil] Request header
     #
     # @overload normalize_requests(request)
-    #   @param request [Hash{String => String}]
+    #   @param request [Hash{Symbol => Object}]
     #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option request :url [String] **[required]** Request url
     #   @option request :header [Hash{String, => String, Array<String>}, nil] Request header
     #
-    # @return [Array<Hash{String => String}>] `Array` of following `Hash`
+    # @return [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
     # @return [String] `:method` Request method (e.g. `"POST"`)
     # @return [String] `:url` Request url
-    # @return [Hash{String, => Array<String>}] `:header` Request header
+    # @return [Hash{String => Array<String>}] `:header` Request header
     def self.normalize_requests(arg)
       requests =
         case arg
