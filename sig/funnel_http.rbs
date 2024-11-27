@@ -1,5 +1,6 @@
 module FunnelHttp
   VERSION: String
+  USER_AGENT: String
 
   class Error < StandardError
   end
