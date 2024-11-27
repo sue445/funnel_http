@@ -33,6 +33,7 @@ RSpec.describe FunnelHttp::Client do
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
         its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
+        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
       end
 
       describe "[1]" do
@@ -42,6 +43,7 @@ RSpec.describe FunnelHttp::Client do
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
         its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"c, d"')]) }
+        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
       end
     end
 
@@ -65,6 +67,7 @@ RSpec.describe FunnelHttp::Client do
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
         its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
+        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
       end
     end
 
@@ -88,12 +91,25 @@ RSpec.describe FunnelHttp::Client do
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
         its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
+        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
       end
     end
   end
 
-  describe ".normalize_requests" do
-    subject { FunnelHttp::Client.normalize_requests(arg) }
+  describe "#add_default_request_header" do
+    subject do
+      client.add_default_request_header(name, value)
+      client.default_request_header
+    end
+
+    let(:name)  { "X-DEFAULT-CUSTOM" }
+    let(:value) { "123" }
+
+    its(["X-DEFAULT-CUSTOM"]) { should eq "123" }
+  end
+
+  describe "#normalize_requests" do
+    subject { client.normalize_requests(arg) }
 
     context "arg is Hash" do
       let(:arg) do
@@ -109,7 +125,10 @@ RSpec.describe FunnelHttp::Client do
           {
             method: "GET",
             url: "http://example.com/get",
-            header: {"X-Test-Header" => ["a", "b"]},
+            header: {
+              "User-Agent" => [FunnelHttp::USER_AGENT],
+              "X-Test-Header" => ["a", "b"],
+            },
           }
         ]
       end
@@ -123,7 +142,10 @@ RSpec.describe FunnelHttp::Client do
           {
             method: "GET",
             url: "http://example.com/get",
-            header: {"X-Test-Header" => ["a", "b"]},
+            header: {
+              "User-Agent" => [FunnelHttp::USER_AGENT],
+              "X-Test-Header" => ["a", "b"],
+            },
           }
         ]
       end
@@ -133,7 +155,10 @@ RSpec.describe FunnelHttp::Client do
           {
             method: "GET",
             url: "http://example.com/get",
-            header: {"X-Test-Header" => ["a", "b"]},
+            header: {
+              "User-Agent" => [FunnelHttp::USER_AGENT],
+              "X-Test-Header" => ["a", "b"],
+            },
           }
         ]
       end
@@ -153,7 +178,10 @@ RSpec.describe FunnelHttp::Client do
           {
             method: "GET",
             url: "http://example.com/get",
-            header: {"X-Test-Header" => ["a"]},
+            header: {
+              "User-Agent" => [FunnelHttp::USER_AGENT],
+              "X-Test-Header" => ["a"],
+            },
           }
         ]
       end
@@ -174,7 +202,39 @@ RSpec.describe FunnelHttp::Client do
           {
             method: "GET",
             url: "http://example.com/get",
-            header: {},
+            header: {
+              "User-Agent" => [FunnelHttp::USER_AGENT],
+            },
+          }
+        ]
+      end
+
+      it { should eq expected }
+    end
+
+    context "with custom header in default_request_header" do
+      before do
+        client.default_request_header.merge!("X-DEFAULT-CUSTOM" => "123")
+      end
+
+      let(:arg) do
+        {
+          method: "GET",
+          url: "http://example.com/get",
+          header: {"X-Test-Header" => ["a", "b"]},
+        }
+      end
+
+      let(:expected) do
+        [
+          {
+            method: "GET",
+            url: "http://example.com/get",
+            header: {
+              "User-Agent" => [FunnelHttp::USER_AGENT],
+              "X-Test-Header" => ["a", "b"],
+              "X-DEFAULT-CUSTOM" => ["123"],
+            },
           }
         ]
       end

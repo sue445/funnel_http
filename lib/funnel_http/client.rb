@@ -2,6 +2,24 @@
 
 module FunnelHttp
   class Client
+    # @!attribute default_request_header
+    #   @return [Hash{String => String, Array<String>}]
+    attr_accessor :default_request_header
+
+    # @param default_request_header [Hash{String => String, Array<String>}]
+    def initialize(default_request_header: {})
+      @default_request_header = {"User-Agent" => USER_AGENT}.merge(default_request_header)
+    end
+
+    # Add header to {default_request_header}
+    # @param name [String] Header name
+    # @param value [String, Array<String>] Header value
+    #
+    # @return [Hash{String => String, Array<String>}] {default_request_header} after adding header
+    def add_default_request_header(name, value)
+      default_request_header.merge!(name => value)
+    end
+
     # perform HTTP requests in parallel
     #
     # @overload perform(requests)
@@ -21,7 +39,7 @@ module FunnelHttp
     # @return [String] `:body` Response body
     # @return [Hash{String => Array<String>}] `:header` Response header
     def perform(requests)
-      FunnelHttp.run_requests(Client.normalize_requests(requests))
+      FunnelHttp.run_requests(normalize_requests(requests))
     end
 
     # @overload normalize_requests(requests)
@@ -40,7 +58,7 @@ module FunnelHttp
     # @return [String] `:method` Request method (e.g. `"POST"`)
     # @return [String] `:url` Request url
     # @return [Hash{String => Array<String>}] `:header` Request header
-    def self.normalize_requests(arg)
+    def normalize_requests(arg)
       requests =
         case arg
         when Array
@@ -64,17 +82,23 @@ module FunnelHttp
       end
     end
 
+    private
+
     # @param header [Hash{String => String, Array<String>}, nil] Request header
     # @return [Hash{String => Array<String>}] Request header
-    def self.normalize_header(header)
-      return {} unless header
+    def normalize_header(header)
+      full_header =
+        if header
+          default_request_header.dup.merge(header)
+        else
+          default_request_header.dup
+        end
 
-      header.each_with_object({}) do |(k, v), hash|
+      full_header.each_with_object({}) do |(k, v), hash|
         # FIXME: Fails `steep check` when use Array(v)...
         # hash[k] = Array(v)
         hash[k] = v.is_a?(Array) ? v : Array(v)
       end
     end
-    private_class_method :normalize_header
   end
 end
