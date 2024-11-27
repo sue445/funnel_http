@@ -4,6 +4,8 @@ module FunnelHttp
 
     def initialize: (?default_request_header: fuzzy_header) -> void
 
+    def add_default_request_header: (String name, String | Array[String] value) -> fuzzy_header
+
     def perform: (fuzzy_request | Array[fuzzy_request] requests) -> Array[response]
 
     def normalize_requests: (fuzzy_request | Array[fuzzy_request] arg) -> Array[strict_request]

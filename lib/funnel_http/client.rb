@@ -11,6 +11,15 @@ module FunnelHttp
       @default_request_header = {"User-Agent" => USER_AGENT}.merge(default_request_header)
     end
 
+    # Add header to {default_request_header}
+    # @param name [String] Header name
+    # @param value [String, Array<String>] Header value
+    #
+    # @return [Hash{String => String, Array<String>}] {default_request_header} after adding header
+    def add_default_request_header(name, value)
+      default_request_header.merge!(name => value)
+    end
+
     # perform HTTP requests in parallel
     #
     # @overload perform(requests)

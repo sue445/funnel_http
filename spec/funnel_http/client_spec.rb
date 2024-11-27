@@ -96,6 +96,18 @@ RSpec.describe FunnelHttp::Client do
     end
   end
 
+  describe "#add_default_request_header" do
+    subject do
+      client.add_default_request_header(name, value)
+      client.default_request_header
+    end
+
+    let(:name)  { "X-DEFAULT-CUSTOM" }
+    let(:value) { "123" }
+
+    its(["X-DEFAULT-CUSTOM"]) { should eq "123" }
+  end
+
   describe "#normalize_requests" do
     subject { client.normalize_requests(arg) }
 
