@@ -2,6 +2,15 @@
 
 module FunnelHttp
   class Client
+    # @!attribute default_request_header
+    #   @return [Hash{String => String, Array<String>}]
+    attr_accessor :default_request_header
+
+    # @param default_request_header [Hash{String => String, Array<String>}]
+    def initialize(default_request_header: {})
+      @default_request_header = {"User-Agent" => USER_AGENT}.merge(default_request_header)
+    end
+
     # perform HTTP requests in parallel
     #
     # @overload perform(requests)
@@ -69,9 +78,14 @@ module FunnelHttp
     # @param header [Hash{String => String, Array<String>}, nil] Request header
     # @return [Hash{String => Array<String>}] Request header
     def normalize_header(header)
-      return {} unless header
+      full_header =
+        if header
+          default_request_header.dup.merge(header)
+        else
+          default_request_header.dup
+        end
 
-      header.each_with_object({}) do |(k, v), hash|
+      full_header.each_with_object({}) do |(k, v), hash|
         # FIXME: Fails `steep check` when use Array(v)...
         # hash[k] = Array(v)
         hash[k] = v.is_a?(Array) ? v : Array(v)

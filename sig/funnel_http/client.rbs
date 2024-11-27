@@ -1,5 +1,9 @@
 module FunnelHttp
   class Client
+    attr_accessor default_request_header: fuzzy_header
+
+    def initialize: (?default_request_header: fuzzy_header) -> void
+
     def perform: (fuzzy_request | Array[fuzzy_request] requests) -> Array[response]
 
     def normalize_requests: (fuzzy_request | Array[fuzzy_request] arg) -> Array[strict_request]
