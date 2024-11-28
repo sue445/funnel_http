@@ -1,30 +1,76 @@
 # FunnelHttp
-
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/funnel_http`. To experiment with that code, run `bin/console` for an interactive prompt.
+Perform HTTP requests in parallel
 
 [![build](https://github.com/sue445/funnel_http/actions/workflows/build.yml/badge.svg)](https://github.com/sue445/funnel_http/actions/workflows/build.yml)
 
-## Installation
+## Requirements
+* Ruby
+* Go
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add funnel_http
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+gem install funnel_http
 ```
 
 ## Usage
+Use [`FunnelHttp::Client#perform`](https://sue445.github.io/funnel_http/FunnelHttp/Client.html#perform-instance_method)
 
-TODO: Write usage instructions here
+```ruby
+require "funnel_http"
+
+client = FunnelHttp::Client.new
+
+requests = [
+  {
+    method: :get,
+    uri: "https://example.com/api/user/1",
+  },
+
+  # with request header
+  { 
+    method: :get, 
+    uri: "https://example.com/api/user/2", 
+    header: {
+      "Authorization" => "Bearer xxxxxxxx",
+      "X-Multiple-Values" => ["1st value", "2nd value"],
+    },
+  },
+]
+
+responses = client.perform(requests)
+# => [
+#   { status_code: 200, body: "Response of /api/user/1", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
+#   { status_code: 200, body: "Response of /api/user/2", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
+# ]
+```
+
+## Customize
+### Add default header
+Example1. Pass default header to [`FunnelHttp::Client#initialize`](https://sue445.github.io/funnel_http/FunnelHttp/Client.html#normalize_requests-instance_method)
+
+```ruby
+default_header = { "Authorization" => "Bearer xxxxxx" }
+
+client = FunnelHttp::Client.new(default_header)
+```
+
+Example 2. Use [`FunnelHttp::Client#add_default_request_header`](https://sue445.github.io/funnel_http/FunnelHttp/Client.html#add_default_request_header-instance_method)
+
+```ruby
+client.add_default_request_header("Authorization", "Bearer xxxxxx")
+```
+
+## API Reference
+https://sue445.github.io/funnel_http/
 
 ## Development
 
@@ -34,7 +80,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/funnel_http.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sue445/funnel_http.
 
 ## License
 
