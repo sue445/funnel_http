@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/cockroachdb/errors v1.11.3
 	github.com/jarcoal/httpmock v1.3.1
-	github.com/ruby-go-gem/go-gem-wrapper v0.4.0
+	github.com/ruby-go-gem/go-gem-wrapper v0.5.0
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/sync v0.9.0
 )
