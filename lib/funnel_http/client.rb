@@ -94,7 +94,10 @@ module FunnelHttp
           default_request_header.dup
         end
 
-      full_header.each_with_object({}) do |(k, v), hash|
+      # Workaround for Ruby::UnannotatedEmptyCollection on steep 1.9.0+
+      result = {} #: strict_header
+
+      full_header.each_with_object(result) do |(k, v), hash|
         # FIXME: Fails `steep check` when use Array(v)...
         # hash[k] = Array(v)
         hash[k] = v.is_a?(Array) ? v : Array(v)
