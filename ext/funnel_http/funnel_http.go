@@ -3,12 +3,15 @@ package main
 /*
 #include "funnel_http.h"
 
+VALUE rb_go_http_client_alloc(VALUE klass);
 VALUE rb_funnel_http_run_requests(VALUE self, VALUE rbAry);
 */
 import "C"
 
 import (
 	"github.com/ruby-go-gem/go-gem-wrapper/ruby"
+	"net/http"
+	"unsafe"
 )
 
 //export rb_funnel_http_run_requests
@@ -27,7 +30,9 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 		requests = append(requests, req)
 	}
 
-	responses, err := RunRequests(requests)
+	httpClient := getHttpClientFromInstanceVariable(ruby.VALUE(self))
+
+	responses, err := RunRequests(httpClient, requests)
 	if err != nil {
 		ruby.RbRaise(rb_cFunnelHttpError, "%s", err.Error())
 	}
@@ -70,6 +75,28 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 	return C.VALUE(ruby.Slice2rbAry(rbHashSlice))
 }
 
+func getHttpClientFromInstanceVariable(self ruby.VALUE) *http.Client {
+	id := ruby.RbIntern("@__go_http_client")
+	value := ruby.RbIvarGet(self, id)
+
+	if !ruby.RB_NIL_P(value) {
+		// return http.Client in instance variable
+		return (*http.Client)(ruby.GetGoStruct(value))
+	}
+
+	// Create and save to instance variable
+	httpClient := http.Client{}
+	httpClientValue := ruby.NewGoStruct(self, unsafe.Pointer(&httpClient))
+	ruby.RbIvarSet(self, id, httpClientValue)
+	return &httpClient
+}
+
+//export rb_go_http_client_alloc
+func rb_go_http_client_alloc(klass C.VALUE) C.VALUE {
+	data := http.Client{}
+	return C.VALUE(ruby.NewGoStruct(ruby.VALUE(klass), unsafe.Pointer(&data)))
+}
+
 func getRbHashValueAsString(rbHash ruby.VALUE, key string) string {
 	value := ruby.RbHashAref(rbHash, ruby.RbToSymbol(ruby.String2Value(key)))
 	return ruby.Value2String(value)
@@ -109,6 +136,7 @@ func Init_funnel_http() {
 	rb_cFunnelHttpClient := ruby.RbPath2Class("FunnelHttp::Client")
 
 	ruby.RbDefinePrivateMethod(rb_cFunnelHttpClient, "run_requests", C.rb_funnel_http_run_requests, 1)
+	ruby.RbDefineAllocFunc(rb_cFunnelHttpClient, C.rb_go_http_client_alloc)
 
 	// FunnelHttp::Error
 	rb_cFunnelHttpError = ruby.RbDefineClassUnder(rb_mFunnelHttp, "Error", ruby.VALUE(C.rb_eStandardError))
