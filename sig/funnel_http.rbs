@@ -27,8 +27,5 @@ module FunnelHttp
     header: strict_header
   }
 
-  # defined in ext/funnel_http/funnel_http.go
-  def self.run_requests: (Array[strict_request] requests) -> Array[response]
-
   # See the writing guide of rbs: https://github.com/ruby/rbs#guides
 end
