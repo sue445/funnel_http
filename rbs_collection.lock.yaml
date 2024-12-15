@@ -53,6 +53,10 @@ gems:
     revision: 0a6ea105a0afc7eaee4494585a7775f47eea6145
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: stringio
+  version: '0'
+  source:
+    type: stdlib
 - name: tempfile
   version: '0'
   source:
