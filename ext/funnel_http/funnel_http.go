@@ -40,12 +40,27 @@ func rb_funnel_http_run_requests(_ C.VALUE, rbAry C.VALUE) C.VALUE {
 		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("body")), ruby.String2Value(string(response.Body)))
 
 		rbHashHeader := ruby.RbHashNew()
+		ruby.RbGcRegisterAddress(&rbHashHeader)
+		defer ruby.RbGcUnregisterAddress(&rbHashHeader)
+
 		for key, values := range response.Header {
 			var headerValues []ruby.VALUE
 			for _, value := range values {
-				headerValues = append(headerValues, ruby.String2Value(value))
+				v := ruby.String2Value(value)
+				ruby.RbGcRegisterAddress(&v)
+				defer ruby.RbGcUnregisterAddress(&v)
+
+				headerValues = append(headerValues, v)
 			}
-			ruby.RbHashAset(rbHashHeader, ruby.String2Value(key), ruby.Slice2rbAry(headerValues))
+			k := ruby.String2Value(key)
+			ruby.RbGcRegisterAddress(&k)
+			defer ruby.RbGcUnregisterAddress(&k)
+
+			v := ruby.Slice2rbAry(headerValues)
+			ruby.RbGcRegisterAddress(&v)
+			defer ruby.RbGcUnregisterAddress(&v)
+
+			ruby.RbHashAset(rbHashHeader, k, v)
 		}
 		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("header")), rbHashHeader)
 
