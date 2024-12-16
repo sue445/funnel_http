@@ -3,7 +3,7 @@ package main
 /*
 #include "funnel_http.h"
 
-VALUE rb_go_http_client_alloc(VALUE klass);
+VALUE rb_go_data_alloc(VALUE klass);
 VALUE rb_funnel_http_run_requests(VALUE self, VALUE rbAry);
 */
 import "C"
@@ -32,7 +32,7 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 
 	httpClient := getHttpClientFromInstanceVariable(ruby.VALUE(self))
 
-	responses, err := RunRequests(httpClient, requests)
+	responses, err := RunRequests(&httpClient, requests)
 	if err != nil {
 		ruby.RbRaise(rb_cFunnelHttpError, "%s", err.Error())
 	}
@@ -75,25 +75,34 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 	return C.VALUE(ruby.Slice2rbAry(rbHashSlice))
 }
 
-func getHttpClientFromInstanceVariable(self ruby.VALUE) *http.Client {
-	id := ruby.RbIntern("@__go_http_client")
+func getHttpClientFromInstanceVariable(self ruby.VALUE) http.Client {
+	id := ruby.RbIntern("@__go_data")
 	value := ruby.RbIvarGet(self, id)
 
 	if !ruby.RB_NIL_P(value) {
 		// return http.Client in instance variable
-		return (*http.Client)(ruby.GetGoStruct(value))
+		data := (*goData)(ruby.GetGoStruct(value))
+		return data.httpClient
 	}
 
-	// Create and save to instance variable
-	httpClient := http.Client{}
-	httpClientValue := ruby.NewGoStruct(self, unsafe.Pointer(&httpClient))
-	ruby.RbIvarSet(self, id, httpClientValue)
-	return &httpClient
+	// Create instance of FunnelHttp::Ext::GoData
+	obj := ruby.RbObjAlloc(rb_cFunnelHttpExtGoData)
+	data := ruby.GetGoStruct(obj)
+
+	// Save FunnelHttp::Ext::GoData to instance variable of FunnelHttp::Ext::Client
+	dataValue := (*ruby.VALUE)(data)
+	ruby.RbIvarSet(self, id, *dataValue)
+
+	return ((*goData)(data)).httpClient
 }
 
-//export rb_go_http_client_alloc
-func rb_go_http_client_alloc(klass C.VALUE) C.VALUE {
-	data := http.Client{}
+type goData struct {
+	httpClient http.Client
+}
+
+//export rb_go_data_alloc
+func rb_go_data_alloc(klass C.VALUE) C.VALUE {
+	data := goData{}
 	return C.VALUE(ruby.NewGoStruct(ruby.VALUE(klass), unsafe.Pointer(&data)))
 }
 
@@ -128,15 +137,22 @@ func getRbHashValueAsMap(rbHash ruby.VALUE, key string) map[string][]string {
 // revive:disable:exported
 
 var rb_cFunnelHttpError ruby.VALUE
+var rb_cFunnelHttpExtGoData ruby.VALUE
 
 //export Init_funnel_http
 func Init_funnel_http() {
 	rb_mFunnelHttp := ruby.RbDefineModule("FunnelHttp")
 
-	rb_cFunnelHttpClient := ruby.RbPath2Class("FunnelHttp::Client")
+	// FunnelHttp::Ext
+	rb_mFunnelHttpExt := ruby.RbDefineModuleUnder(rb_mFunnelHttp, "Ext")
 
-	ruby.RbDefinePrivateMethod(rb_cFunnelHttpClient, "run_requests", C.rb_funnel_http_run_requests, 1)
-	ruby.RbDefineAllocFunc(rb_cFunnelHttpClient, C.rb_go_http_client_alloc)
+	// FunnelHttp::Ext::Client
+	rb_cFunnelHttpExtClient := ruby.RbDefineClassUnder(rb_mFunnelHttpExt, "Client", ruby.VALUE(C.rb_cObject))
+	ruby.RbDefineMethod(rb_cFunnelHttpExtClient, "run_requests", C.rb_funnel_http_run_requests, 1)
+
+	// FunnelHttp::Ext::GoData
+	rb_cFunnelHttpExtGoData = ruby.RbDefineClassUnder(rb_mFunnelHttpExt, "GoData", ruby.VALUE(C.rb_cObject))
+	ruby.RbDefineAllocFunc(rb_cFunnelHttpExtGoData, C.rb_go_data_alloc)
 
 	// FunnelHttp::Error
 	rb_cFunnelHttpError = ruby.RbDefineClassUnder(rb_mFunnelHttp, "Error", ruby.VALUE(C.rb_eStandardError))

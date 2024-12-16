@@ -2,6 +2,7 @@
 
 require_relative "funnel_http/version"
 require_relative "funnel_http/client"
+require_relative "funnel_http/ext"
 require_relative "funnel_http/funnel_http"
 
 module FunnelHttp

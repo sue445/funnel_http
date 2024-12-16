@@ -1,5 +1,7 @@
 module FunnelHttp
   class Client
+    @ext_client: FunnelHttp::Ext::Client
+
     attr_accessor default_request_header: fuzzy_header
 
     def initialize: (?default_request_header: fuzzy_header) -> void
@@ -14,7 +16,6 @@ module FunnelHttp
 
     def normalize_header: (fuzzy_header? header) -> strict_header
 
-    # defined in ext/funnel_http/funnel_http.go
-    def run_requests: (Array[strict_request] requests) -> Array[response]
+    def ext_client: () -> FunnelHttp::Ext::Client
   end
 end

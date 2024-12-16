@@ -1,0 +1,11 @@
+module FunnelHttp
+  module Ext
+    # defined in ext/funnel_http/funnel_http.go
+    class Client
+      def run_requests: (Array[strict_request] requests) -> Array[response]
+    end
+
+    class GoData
+    end
+  end
+end
