@@ -107,9 +107,11 @@ func TestRunRequests(t *testing.T) {
 			},
 		},
 	}
+
+	httpClient := http.Client{}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			actual, err := main.RunRequests(tt.requests)
+			actual, err := main.RunRequests(&httpClient, tt.requests)
 			if assert.NoError(t, err) {
 				assert.Equal(t, tt.expected, actual)
 			}

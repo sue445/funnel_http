@@ -39,7 +39,7 @@ module FunnelHttp
     # @return [String] `:body` Response body
     # @return [Hash{String => Array<String>}] `:header` Response header
     def perform(requests)
-      FunnelHttp.run_requests(normalize_requests(requests))
+      ext_client.run_requests(normalize_requests(requests))
     end
 
     # @overload normalize_requests(requests)
@@ -102,6 +102,11 @@ module FunnelHttp
         # hash[k] = Array(v)
         hash[k] = v.is_a?(Array) ? v : Array(v)
       end
+    end
+
+    # @return [FunnelHttp::Ext::Client]
+    def ext_client
+      @ext_client ||= FunnelHttp::Ext::Client.new
     end
   end
 end

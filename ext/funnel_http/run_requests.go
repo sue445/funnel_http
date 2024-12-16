@@ -23,11 +23,9 @@ type Response struct {
 }
 
 // RunRequests perform HTTP requests in parallel
-func RunRequests(requests []Request) ([]Response, error) {
+func RunRequests(httpClient *http.Client, requests []Request) ([]Response, error) {
 	g := new(errgroup.Group)
 	responses := make([]Response, len(requests))
-
-	httpClient := &http.Client{}
 
 	for i, request := range requests {
 		// https://golang.org/doc/faq#closures_and_goroutines
