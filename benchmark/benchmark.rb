@@ -1,18 +1,21 @@
 require "benchmark/ips"
-
-ENV["TEST_SERVER_PORT"] ||= "8080"
+require "open-uri"
+require "parallel"
+require "etc"
 
 ROOT_DIR = File.expand_path("..", __dir__)
 
-TEST_SERVER = "http://localhost:#{ENV["TEST_SERVER_PORT"]}"
+TEST_SERVER_URL = "http://localhost:8080/"
 
-REQUEST_COUNT = 10
+REQUEST_COUNT = 100
+
+BENCHMARK_CONCURRENCY = ENV.fetch("BENCHMARK_CONCURRENCY") { 4 }
 
 # Build native extension before running benchmark
 Dir.chdir(ROOT_DIR) do
   system("bundle config set --local path 'vendor/bundle'", exception: true)
   system("bundle install", exception: true)
-  system("bundle exec rake", exception: true)
+  system("bundle exec rake clobber compile", exception: true)
 end
 
 require_relative "../lib/funnel_http"
@@ -22,29 +25,37 @@ $VERBOSE = nil
 
 system("go version", exception: true)
 
-def with_dummy_server
-  @server_pid = spawn("bundle exec puma --bind tcp://0.0.0.0:#{ENV["TEST_SERVER_PORT"]} --threads 16:16 #{File.join(ROOT_DIR, "spec", "support", "server", "dummy_app.rb")}")
-  sleep 1
-  puts "Test server started with PID #{@server_pid}"
+requests = Array.new(REQUEST_COUNT, { method: :get, url: TEST_SERVER_URL })
 
-  yield
-
-ensure
-  if @server_pid
-    puts "Stopping test server with PID #{@server_pid}"
-    Process.kill("TERM", @server_pid)
-    Process.wait(@server_pid)
-  end
+def fetch_server
+  URI.parse(TEST_SERVER_URL).open(open_timeout: 90, read_timeout: 90).read
 end
 
-requests = Array.new(REQUEST_COUNT, { method: :get, url: "#{TEST_SERVER}/get" })
+Benchmark.ips do |x|
+  x.config(warmup: 1, time: 2)
 
-with_dummy_server do
-  Benchmark.ips do |x|
-    x.report("FunnelHttp::Client#perform") do
-      FunnelHttp::Client.new.perform(requests)
-    end
-
-    x.compare!
+  x.report("FunnelHttp::Client#perform") do
+    FunnelHttp::Client.new.perform(requests)
   end
+
+  x.report("Parallel with #{BENCHMARK_CONCURRENCY} processes") do
+    Parallel.each(requests, in_processes: BENCHMARK_CONCURRENCY) do
+      fetch_server
+    end
+  end
+
+  x.report("Parallel with #{BENCHMARK_CONCURRENCY} threads") do
+    Parallel.each(requests, in_threads: BENCHMARK_CONCURRENCY) do
+      fetch_server
+    end
+  end
+
+  # FIXME: open-uri doesn't work in Ractor
+  # x.report("Parallel with Ractor") do
+  #   REQUEST_COUNT.times.map do
+  #     Ractor.new { URI.parse("http://localhost:8080/").read }
+  #   end.each(&:take)
+  # end
+
+  x.compare!
 end
