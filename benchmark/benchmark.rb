@@ -5,7 +5,7 @@ require "etc"
 
 ROOT_DIR = File.expand_path("..", __dir__)
 
-TEST_SERVER_URL = "http://localhost:8080/"
+TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }
 
 REQUEST_COUNT = 100
 
