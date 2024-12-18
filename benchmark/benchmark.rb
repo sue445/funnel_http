@@ -32,7 +32,7 @@ def fetch_server
 end
 
 Benchmark.ips do |x|
-  x.config(warmup: 1, time: 2)
+  # x.config(warmup: 1, time: 2)
 
   x.report("FunnelHttp::Client#perform") do
     FunnelHttp::Client.new.perform(requests)
