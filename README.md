@@ -73,6 +73,16 @@ client.add_default_request_header("Authorization", "Bearer xxxxxx")
 ## API Reference
 https://sue445.github.io/funnel_http/
 
+## Performance
+Depending on the case, `funnel_http` runs about 1.2x faster than pure-Ruby `Thread` :dash:
+
+See [benchmark/](benchmark/)
+
+### Why?
+`funnel_http` uses [Go's goroutine](https://go.dev/tour/concurrency) for asynchronous processing of HTTP requests.
+
+So this is faster than Ruby in many cases.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
