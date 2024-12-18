@@ -9,7 +9,7 @@ TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }
 
 REQUEST_COUNT = 100
 
-BENCHMARK_CONCURRENCY = ENV.fetch("BENCHMARK_CONCURRENCY") { 4 }
+BENCHMARK_CONCURRENCY = (ENV.fetch("BENCHMARK_CONCURRENCY") { 4 }).to_i
 
 # Build native extension before running benchmark
 Dir.chdir(ROOT_DIR) do
