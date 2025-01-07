@@ -6,7 +6,7 @@ class DummyApp < Sinatra::Base
     content_type "text/plain"
 
     http_headers = request.env.select { |k, v| k.start_with?("HTTP_") }
-    response["X-Request-Headers"] = http_headers.to_s
+    response["X-Request-Headers"] = http_headers.map { |k, v| "#{k}=#{v}" }.join(";")
 
     "/get"
   end

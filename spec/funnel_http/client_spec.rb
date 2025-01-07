@@ -32,8 +32,8 @@ RSpec.describe FunnelHttp::Client do
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
-        its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
-        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_X_TEST_HEADER=a, b")]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
       end
 
       describe "[1]" do
@@ -42,8 +42,8 @@ RSpec.describe FunnelHttp::Client do
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
-        its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"c, d"')]) }
-        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_X_TEST_HEADER=c, d")]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
       end
     end
 
@@ -66,8 +66,8 @@ RSpec.describe FunnelHttp::Client do
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
-        its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
-        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_X_TEST_HEADER=a, b")]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
       end
     end
 
@@ -90,8 +90,8 @@ RSpec.describe FunnelHttp::Client do
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
-        its([:header]) { should include("X-Request-Headers" => [include('"HTTP_X_TEST_HEADER"=>"a, b"')]) }
-        its([:header]) { should include("X-Request-Headers" => [include(%Q{"HTTP_USER_AGENT"=>"#{FunnelHttp::USER_AGENT}"})]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_X_TEST_HEADER=a, b")]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
       end
     end
   end
