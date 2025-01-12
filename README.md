@@ -45,12 +45,24 @@ requests = [
       "X-Multiple-Values" => ["1st value", "2nd value"],
     },
   },
+
+  # with request body
+  {
+    method: :post,
+    uri: "https://example.com/api/user",
+    header: {
+      "Authorization" => "Bearer xxxxxxxx",
+      "Content-Type" => "application/json",
+    },
+    body: '{"name": "sue445"}',
+  },
 ]
 
 responses = client.perform(requests)
 # => [
 #   { status_code: 200, body: "Response of /api/user/1", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
 #   { status_code: 200, body: "Response of /api/user/2", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
+#   { status_code: 200, body: "Response of /api/user", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
 # ]
 ```
 
