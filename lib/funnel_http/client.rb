@@ -80,7 +80,7 @@ module FunnelHttp
           url: request[:url].to_s,
           method: request[:method].to_s.upcase,
           header: normalize_header(request[:header]),
-          body: request[:body],
+          body: request[:body].freeze,
         }
       end
     end
