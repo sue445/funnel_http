@@ -13,6 +13,7 @@ type Request struct {
 	Method string
 	URL    string
 	Header map[string][]string
+	Body   []byte
 }
 
 // Response is proxy between CRuby and Go
@@ -33,8 +34,7 @@ func RunRequests(httpClient *http.Client, requests []Request) ([]Response, error
 		request := request
 
 		g.Go(func() error {
-			var body []byte
-			httpReq, err := http.NewRequest(request.Method, request.URL, bytes.NewBuffer(body))
+			httpReq, err := http.NewRequest(request.Method, request.URL, bytes.NewBuffer(request.Body))
 			if err != nil {
 				return errors.WithStack(err)
 			}
