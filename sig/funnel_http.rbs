@@ -10,7 +10,8 @@ module FunnelHttp
   type fuzzy_request = {
     method: String | Symbol,
     url: String,
-    header: fuzzy_header?
+    header: fuzzy_header?,
+    body: String?,
   }
 
   type strict_header = Hash[String, Array[String]]

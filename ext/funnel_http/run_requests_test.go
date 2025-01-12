@@ -1,6 +1,7 @@
 package main_test
 
 import (
+	"github.com/cockroachdb/errors"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"github.com/sue445/funnel_http"
@@ -47,7 +48,7 @@ func TestRunRequests(t *testing.T) {
 		func(req *http.Request) (*http.Response, error) {
 			payload, err := io.ReadAll(req.Body)
 			if err != nil {
-				return nil, err
+				return nil, errors.WithStack(err)
 			}
 
 			resp := httpmock.NewStringResponse(200, string(payload))
