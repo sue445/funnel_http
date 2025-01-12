@@ -26,6 +26,7 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 			Method: getRbHashValueAsString(rbHash, "method"),
 			URL:    getRbHashValueAsString(rbHash, "url"),
 			Header: getRbHashValueAsMap(rbHash, "header"),
+			Body:   getRbHashValueAsBytes(rbHash, "body"),
 		}
 		requests = append(requests, req)
 	}
@@ -109,6 +110,22 @@ func rb_go_data_alloc(klass C.VALUE) C.VALUE {
 func getRbHashValueAsString(rbHash ruby.VALUE, key string) string {
 	value := ruby.RbHashAref(rbHash, ruby.RbToSymbol(ruby.String2Value(key)))
 	return ruby.Value2String(value)
+}
+
+func getRbHashValueAsBytes(rbHash ruby.VALUE, key string) []byte {
+	value := ruby.RbHashAref(rbHash, ruby.RbToSymbol(ruby.String2Value(key)))
+
+	if value == ruby.Qnil() {
+		return []byte{}
+	}
+
+	length := ruby.RSTRING_LENINT(value)
+	if length == 0 {
+		return []byte{}
+	}
+
+	char := ruby.RSTRING_PTR(value)
+	return C.GoBytes(unsafe.Pointer(char), C.int(length))
 }
 
 func getRbHashValueAsMap(rbHash ruby.VALUE, key string) map[string][]string {

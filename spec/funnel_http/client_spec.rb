@@ -94,6 +94,53 @@ RSpec.describe FunnelHttp::Client do
         its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
       end
     end
+
+    context "with request body" do
+      let(:requests) do
+        [
+          {
+            method: "POST",
+            url: "#{test_server}/post",
+            header: {
+              "Content-type" => "application/json",
+              "X-Test-Header" => ["a", "b"],
+            },
+            body: '{"value": "111"}',
+          },
+          {
+            method: "POST",
+            url: "#{test_server}/post",
+            header: {
+              "Content-type" => "application/json",
+              "X-Test-Header" => ["c", "d"],
+            },
+            body: '{"value": "222"}',
+          },
+        ]
+      end
+
+      its(:count) { should eq 2 }
+
+      describe "[0]" do
+        subject { responses[0] }
+
+        its([:status_code]) { should eq 200 }
+        its([:body]) { should eq '{"value": "111"}' }
+        its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_X_TEST_HEADER=a, b")]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
+      end
+
+      describe "[1]" do
+        subject { responses[1] }
+
+        its([:status_code]) { should eq 200 }
+        its([:body]) { should eq '{"value": "222"}' }
+        its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_X_TEST_HEADER=c, d")]) }
+        its([:header]) { should include("X-Request-Headers" => [include("HTTP_USER_AGENT=#{FunnelHttp::USER_AGENT}")]) }
+      end
+    end
   end
 
   describe "#add_default_request_header" do
@@ -129,6 +176,7 @@ RSpec.describe FunnelHttp::Client do
               "User-Agent" => [FunnelHttp::USER_AGENT],
               "X-Test-Header" => ["a", "b"],
             },
+            body: nil,
           }
         ]
       end
@@ -159,6 +207,7 @@ RSpec.describe FunnelHttp::Client do
               "User-Agent" => [FunnelHttp::USER_AGENT],
               "X-Test-Header" => ["a", "b"],
             },
+            body: nil,
           }
         ]
       end
@@ -182,6 +231,7 @@ RSpec.describe FunnelHttp::Client do
               "User-Agent" => [FunnelHttp::USER_AGENT],
               "X-Test-Header" => ["a"],
             },
+            body: nil,
           }
         ]
       end
@@ -205,6 +255,7 @@ RSpec.describe FunnelHttp::Client do
             header: {
               "User-Agent" => [FunnelHttp::USER_AGENT],
             },
+            body: nil,
           }
         ]
       end
@@ -235,6 +286,7 @@ RSpec.describe FunnelHttp::Client do
               "X-Test-Header" => ["a", "b"],
               "X-DEFAULT-CUSTOM" => ["123"],
             },
+            body: nil,
           }
         ]
       end

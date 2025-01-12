@@ -27,12 +27,14 @@ module FunnelHttp
     #   @option requests :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option requests :url [String] **[required]** Request url
     #   @option requests :header [Hash{String => String, Array<String>}, nil] Request header
+    #   @option requests :body [String, nil] Request body
     #
     # @overload perform(request)
     #   @param request [Hash{Symbol => Object}]
     #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
     #   @option request :url [String] **[required]** Request url
     #   @option request :header [Hash{String => String, Array<String>}, nil] Request header
+    #   @option request :body [String, nil] Request body
     #
     # @return [Array<Hash<Symbol => Object>>] `Array` of following `Hash`
     # @return [Integer] `:status_code`
@@ -78,6 +80,7 @@ module FunnelHttp
           url: request[:url].to_s,
           method: request[:method].to_s.upcase,
           header: normalize_header(request[:header]),
+          body: request[:body].freeze,
         }
       end
     end
