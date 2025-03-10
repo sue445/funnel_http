@@ -1,6 +1,9 @@
 module github.com/sue445/funnel_http
 
-go 1.23
+go 1.23.0
+
+toolchain go1.24.0
+
 require (
 	github.com/cockroachdb/errors v1.11.3
 	github.com/jarcoal/httpmock v1.3.1
