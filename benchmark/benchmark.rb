@@ -7,7 +7,7 @@ ROOT_DIR = File.expand_path("..", __dir__)
 
 TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }
 
-REQUEST_COUNT = 100
+REQUEST_COUNT = (ENV.fetch("REQUEST_COUNT") { 100 }).to_i
 
 BENCHMARK_CONCURRENCY = (ENV.fetch("BENCHMARK_CONCURRENCY") { 4 }).to_i
 
@@ -32,7 +32,7 @@ def fetch_server
 end
 
 Benchmark.ips do |x|
-  # x.config(warmup: 1, time: 2)
+  x.config(warmup: 2, time: 5)
 
   x.report("FunnelHttp::Client#perform") do
     FunnelHttp::Client.new.perform(requests)
