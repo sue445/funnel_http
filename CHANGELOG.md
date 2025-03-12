@@ -1,5 +1,13 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.0...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.1...main)
+
+## [0.3.1](https://github.com/sue445/funnel_http/releases/tag/v0.3.1) - 2025-03-12
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.0...v0.3.1)
+
+* Diet gem
+  * https://github.com/sue445/funnel_http/pull/66
+* Tweak gem description
+  * https://github.com/sue445/funnel_http/pull/68
 
 ## [0.3.0](https://github.com/sue445/funnel_http/releases/tag/v0.3.0) - 2025-01-12
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.2.0...v0.3.0)
