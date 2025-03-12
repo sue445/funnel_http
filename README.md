@@ -1,5 +1,5 @@
 # FunnelHttp
-Perform HTTP requests in parallel
+Perform HTTP requests in parallel with goroutine
 
 [![Gem Version](https://badge.fury.io/rb/funnel_http.svg)](https://badge.fury.io/rb/funnel_http)
 [![build](https://github.com/sue445/funnel_http/actions/workflows/build.yml/badge.svg)](https://github.com/sue445/funnel_http/actions/workflows/build.yml)
