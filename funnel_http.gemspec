@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["sue445"]
   spec.email = ["sue445@sue445.net"]
 
-  spec.summary = "Perform HTTP requests in parallel"
-  spec.description = "Perform HTTP requests in parallel"
+  spec.summary = "Perform HTTP requests in parallel with goroutine"
+  spec.description = "Perform HTTP requests in parallel with goroutine"
   spec.homepage = "https://github.com/sue445/funnel_http"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.3.0"
