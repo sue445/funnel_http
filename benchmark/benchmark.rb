@@ -34,6 +34,12 @@ end
 Benchmark.ips do |x|
   x.config(warmup: 2, time: 5)
 
+  x.report("sequential") do
+    REQUEST_COUNT.times do
+      fetch_server
+    end
+  end
+
   x.report("FunnelHttp::Client#perform") do
     FunnelHttp::Client.new.perform(requests)
   end
