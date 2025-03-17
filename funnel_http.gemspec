@@ -52,7 +52,6 @@ Gem::Specification.new do |spec|
 
   # for benchmarker
   spec.add_development_dependency "benchmark-ips"
-  spec.add_development_dependency "parallel"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
