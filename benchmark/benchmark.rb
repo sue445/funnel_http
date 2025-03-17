@@ -1,14 +1,11 @@
 require "benchmark/ips"
 require "open-uri"
-require "parallel"
 
 ROOT_DIR = File.expand_path("..", __dir__)
 
 TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }
 
 REQUEST_COUNT = (ENV.fetch("REQUEST_COUNT") { 100 }).to_i
-
-BENCHMARK_CONCURRENCY = (ENV.fetch("BENCHMARK_CONCURRENCY") { 4 }).to_i
 
 # Build native extension before running benchmark
 Dir.chdir(ROOT_DIR) do
@@ -41,18 +38,6 @@ Benchmark.ips do |x|
 
   x.report("FunnelHttp::Client#perform") do
     FunnelHttp::Client.new.perform(requests)
-  end
-
-  x.report("Parallel with #{BENCHMARK_CONCURRENCY} processes") do
-    Parallel.each(requests, in_processes: BENCHMARK_CONCURRENCY) do
-      fetch_server
-    end
-  end
-
-  x.report("Parallel with #{BENCHMARK_CONCURRENCY} threads") do
-    Parallel.each(requests, in_threads: BENCHMARK_CONCURRENCY) do
-      fetch_server
-    end
   end
 
   # FIXME: open-uri doesn't work in Ractor
