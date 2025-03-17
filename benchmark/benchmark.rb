@@ -3,7 +3,7 @@ require "open-uri"
 
 ROOT_DIR = File.expand_path("..", __dir__)
 
-TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }
+TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }.freeze
 
 REQUEST_COUNT = (ENV.fetch("REQUEST_COUNT") { 100 }).to_i
 
@@ -47,7 +47,7 @@ Benchmark.ips do |x|
   # FIXME: open-uri and net/http doesn't work in Ractor
   # x.report("Parallel with Ractor") do
   #   REQUEST_COUNT.times.map do
-  #     Ractor.new { URI.parse("http://localhost:8080/").read }
+  #     Ractor.new { fetch_server }
   #   end.each(&:take)
   # end
 
