@@ -7,11 +7,15 @@ TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }
 
 REQUEST_COUNT = (ENV.fetch("REQUEST_COUNT") { 100 }).to_i
 
+def sh(command)
+  system(command, exception: true)
+end
+
 # Build native extension before running benchmark
 Dir.chdir(ROOT_DIR) do
-  system("bundle config set --local path 'vendor/bundle'", exception: true)
-  system("bundle install", exception: true)
-  system("bundle exec rake clobber compile", exception: true)
+  sh "bundle config set --local path 'vendor/bundle'"
+  sh "bundle install"
+  sh "bundle exec rake clobber compile"
 end
 
 require_relative "../lib/funnel_http"
@@ -19,7 +23,7 @@ require_relative "../lib/funnel_http"
 # Suppress Ractor warning
 $VERBOSE = nil
 
-system("go version", exception: true)
+sh "go version"
 
 requests = Array.new(REQUEST_COUNT, { method: :get, url: TEST_SERVER_URL })
 
