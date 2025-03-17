@@ -40,7 +40,7 @@ Benchmark.ips do |x|
     FunnelHttp::Client.new.perform(requests)
   end
 
-  # FIXME: open-uri doesn't work in Ractor
+  # FIXME: open-uri and net/http doesn't work in Ractor
   # x.report("Parallel with Ractor") do
   #   REQUEST_COUNT.times.map do
   #     Ractor.new { URI.parse("http://localhost:8080/").read }
