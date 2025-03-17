@@ -63,5 +63,11 @@ Benchmark.ips do |x|
   #   end.each(&:take)
   # end
 
+  x.report("Parallel with Fiber") do
+    REQUEST_COUNT.times.map do
+      Fiber.new { fetch_server }
+    end.each(&:resume)
+  end
+
   x.compare!
 end
