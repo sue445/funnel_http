@@ -1,7 +1,6 @@
 require "benchmark/ips"
 require "open-uri"
 require "parallel"
-require "etc"
 
 ROOT_DIR = File.expand_path("..", __dir__)
 
