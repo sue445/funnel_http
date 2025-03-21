@@ -1,5 +1,11 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.1...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.2...main)
+
+## [0.3.1](https://github.com/sue445/funnel_http/releases/tag/v0.3.2) - 2025-03-22
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.1...v0.3.2)
+
+* Fix `Ruby::BlockBodyTypeMismatch` in rbs
+  * https://github.com/sue445/funnel_http/pull/71
 
 ## [0.3.1](https://github.com/sue445/funnel_http/releases/tag/v0.3.1) - 2025-03-12
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.3.0...v0.3.1)
