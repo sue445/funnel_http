@@ -33,14 +33,6 @@ gems:
   version: '0'
   source:
     type: stdlib
-- name: parallel
-  version: '1.20'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 7c22ddc3de54df89ebb2546c9dcb1c1498c8154a
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
 - name: rack
   version: '2.2'
   source:
