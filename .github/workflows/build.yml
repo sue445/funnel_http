@@ -87,7 +87,7 @@ jobs:
 
       - run: bundle exec rbs collection install
       - run: bundle exec rbs validate
-      - run: bundle exec steep check
+      - run: bundle exec steep check --jobs=$(nproc)
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@v2
