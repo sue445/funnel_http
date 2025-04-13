@@ -1,4 +1,8 @@
 module FunnelHttp
   class Error < StandardError
   end
+
+  class HttpAggregateError < Error
+    def self.generate_error_message: (Array[response] error_responses) -> String
+  end
 end
