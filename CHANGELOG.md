@@ -1,5 +1,12 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.2...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.4.0...main)
+
+## [0.4.0](https://github.com/sue445/funnel_http/releases/tag/v0.4.0) - 2025-04-13
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.3.2...v0.4.0)
+
+* Add request url to response
+  * https://github.com/sue445/funnel_http/pull/80
+* Update Go dependencies
 
 ## [0.3.2](https://github.com/sue445/funnel_http/releases/tag/v0.3.2) - 2025-03-22
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.3.1...v0.3.2)
