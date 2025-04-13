@@ -3,6 +3,12 @@ module FunnelHttp
   end
 
   class HttpAggregateError < Error
+    @error_responses: Array[response]
+
+    attr_accessor error_responses: Array[response]
+
+    def initialize: (Array[response] error_responses) -> void
+
     def self.generate_error_message: (Array[response] error_responses) -> String
   end
 end

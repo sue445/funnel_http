@@ -5,7 +5,21 @@ module FunnelHttp
 
   # Aggregates multiple http errors
   class HttpAggregateError < Error
-    # Generate error message for [StandardError#initialize]
+    # @!attribute [r] error_responses
+    #   @return [Array<Hash<Symbol => Object>>] `Array` of following `Hash`
+    #   @return [String] `:url` Request url
+    #   @return [Integer] `:status_code`
+    #   @return [String] `:body` Response body
+    #   @return [Hash{String => Array<String>}] `:header` Response header
+    attr_reader :error_responses
+
+    # @param error_responses [Array<Hash<Symbol => Object>>]
+    def initialize(error_responses)
+      @error_responses = error_responses
+      super(HttpAggregateError.generate_error_message(error_responses))
+    end
+
+    # Generate error message for `StandardError#initialize`
     #
     # @param error_responses [Array<Hash<Symbol => Object>>]
     #
