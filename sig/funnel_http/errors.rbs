@@ -1,0 +1,4 @@
+module FunnelHttp
+  class Error < StandardError
+  end
+end
