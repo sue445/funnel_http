@@ -60,9 +60,9 @@ requests = [
 
 responses = client.perform(requests)
 # => [
-#   { status_code: 200, body: "Response of /api/user/1", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
-#   { status_code: 200, body: "Response of /api/user/2", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
-#   { status_code: 200, body: "Response of /api/user", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
+#   { url: "https://example.com/api/user/1", status_code: 200, body: "Response of /api/user/1", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
+#   { url: "https://example.com/api/user/2", status_code: 200, body: "Response of /api/user/2", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
+#   { url: "https://example.com/api/user", status_code: 200, body: "Response of /api/user", header: { "Content-Type" => ["text/plain;charset=utf-8"]} }
 # ]
 ```
 

@@ -18,6 +18,7 @@ type Request struct {
 
 // Response is proxy between CRuby and Go
 type Response struct {
+	URL        string
 	StatusCode int
 	Header     map[string][]string
 	Body       []byte
@@ -58,6 +59,7 @@ func RunRequests(httpClient *http.Client, requests []Request) ([]Response, error
 				return errors.WithStack(err)
 			}
 
+			responses[i].URL = request.URL
 			responses[i].Body = buf
 			responses[i].Header = map[string][]string{}
 

@@ -37,6 +37,7 @@ module FunnelHttp
     #   @option request :body [String, nil] Request body
     #
     # @return [Array<Hash<Symbol => Object>>] `Array` of following `Hash`
+    # @return [String] `:url` Request url
     # @return [Integer] `:status_code`
     # @return [String] `:body` Response body
     # @return [Hash{String => Array<String>}] `:header` Response header

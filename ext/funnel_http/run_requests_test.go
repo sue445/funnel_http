@@ -82,6 +82,7 @@ func TestRunRequests(t *testing.T) {
 			},
 			expected: []main.Response{
 				{
+					URL:        "http://example.com/1",
 					StatusCode: 200,
 					Body:       []byte("GET http://example.com/1"),
 					Header: map[string][]string{
@@ -111,6 +112,7 @@ func TestRunRequests(t *testing.T) {
 			},
 			expected: []main.Response{
 				{
+					URL:        "http://example.com/1",
 					StatusCode: 200,
 					Body:       []byte("GET http://example.com/1"),
 					Header: map[string][]string{
@@ -119,6 +121,7 @@ func TestRunRequests(t *testing.T) {
 					},
 				},
 				{
+					URL:        "http://example.com/2",
 					StatusCode: 200,
 					Body:       []byte("GET http://example.com/2"),
 					Header: map[string][]string{
@@ -142,6 +145,7 @@ func TestRunRequests(t *testing.T) {
 			},
 			expected: []main.Response{
 				{
+					URL:        "http://example.com/1",
 					StatusCode: 200,
 					Body:       []byte("111"),
 					Header: map[string][]string{
@@ -173,6 +177,7 @@ func TestRunRequests(t *testing.T) {
 			},
 			expected: []main.Response{
 				{
+					URL:        "http://example.com/1",
 					StatusCode: 200,
 					Body:       []byte("111"),
 					Header: map[string][]string{
@@ -181,6 +186,7 @@ func TestRunRequests(t *testing.T) {
 					},
 				},
 				{
+					URL:        "http://example.com/1",
 					StatusCode: 200,
 					Body:       []byte("222"),
 					Header: map[string][]string{
