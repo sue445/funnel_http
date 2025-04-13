@@ -37,9 +37,9 @@ requests = [
   },
 
   # with request header
-  { 
+  {
     method: :get,
-    url: "https://example.com/api/user/2", 
+    url: "https://example.com/api/user/2",
     header: {
       "Authorization" => "Bearer xxxxxxxx",
       "X-Multiple-Values" => ["1st value", "2nd value"],
