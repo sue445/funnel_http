@@ -1,5 +1,11 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.4.0...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.0...main)
+
+## [0.5.0](https://github.com/sue445/funnel_http/releases/tag/v0.5.0) - 2025-04-14
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.4.0...v0.5.0)
+
+* Impl `FunnelHttp::Client#perform!`
+  * https://github.com/sue445/funnel_http/pull/81
 
 ## [0.4.0](https://github.com/sue445/funnel_http/releases/tag/v0.4.0) - 2025-04-13
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.3.2...v0.4.0)
