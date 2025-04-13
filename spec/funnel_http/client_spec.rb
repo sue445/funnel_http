@@ -149,6 +149,89 @@ RSpec.describe FunnelHttp::Client do
     end
   end
 
+  describe "#perform!" do
+    subject { client.perform!([]) }
+
+    before do
+      allow(client).to receive(:perform) { stub_responses }
+    end
+
+    context "no errors" do
+      let(:stub_responses) do
+        [
+          {
+            url: "http://example.com/200",
+            status_code: 200,
+            body: "",
+            header: {},
+          },
+          {
+            url: "http://example.com/302",
+            status_code: 302,
+            body: "",
+            header: {},
+          },
+        ]
+      end
+
+      it { should eq stub_responses }
+    end
+
+    context "contains 1+ errors" do
+      let(:stub_responses) do
+        [
+          {
+            url: "http://example.com/200",
+            status_code: 200,
+            body: "",
+            header: {},
+          },
+          {
+            url: "http://example.com/302",
+            status_code: 302,
+            body: "",
+            header: {},
+          },
+          {
+            url: "http://example.com/404",
+            status_code: 404,
+            body: "",
+            header: {},
+          },
+          {
+            url: "http://example.com/502",
+            status_code: 502,
+            body: "",
+            header: {},
+          },
+        ]
+      end
+
+      it { expect { subject }.to raise_error(FunnelHttp::HttpAggregateError, "http://example.com/404 (404 error), http://example.com/502 (502 error)") }
+
+      it "have error_responses" do
+        expect { subject }.to raise_error(FunnelHttp::HttpAggregateError) do |error|
+          error_responses = [
+            {
+              url: "http://example.com/404",
+              status_code: 404,
+              body: "",
+              header: {},
+            },
+            {
+              url: "http://example.com/502",
+              status_code: 502,
+              body: "",
+              header: {},
+            },
+          ]
+
+          expect(error.error_responses).to eq error_responses
+        end
+      end
+    end
+  end
+
   describe "#add_default_request_header" do
     subject do
       client.add_default_request_header(name, value)
