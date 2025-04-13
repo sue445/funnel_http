@@ -24,6 +24,7 @@ module FunnelHttp
   }
 
   type response = {
+    url: String,
     status_code: Integer,
     body: String,
     header: strict_header

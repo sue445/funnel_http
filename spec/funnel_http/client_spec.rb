@@ -29,6 +29,7 @@ RSpec.describe FunnelHttp::Client do
       describe "[0]" do
         subject { responses[0] }
 
+        its([:url]) { should eq "#{test_server}/get" }
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
@@ -39,6 +40,7 @@ RSpec.describe FunnelHttp::Client do
       describe "[1]" do
         subject { responses[1] }
 
+        its([:url]) { should eq "#{test_server}/get" }
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
@@ -63,6 +65,7 @@ RSpec.describe FunnelHttp::Client do
       describe "[0]" do
         subject { responses[0] }
 
+        its([:url]) { should eq "#{test_server}/get" }
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
@@ -87,6 +90,7 @@ RSpec.describe FunnelHttp::Client do
       describe "[0]" do
         subject { responses[0] }
 
+        its([:url]) { should eq "#{test_server}/get" }
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq "/get" }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
@@ -124,6 +128,7 @@ RSpec.describe FunnelHttp::Client do
       describe "[0]" do
         subject { responses[0] }
 
+        its([:url]) { should eq "#{test_server}/post" }
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq '{"value": "111"}' }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }
@@ -134,6 +139,7 @@ RSpec.describe FunnelHttp::Client do
       describe "[1]" do
         subject { responses[1] }
 
+        its([:url]) { should eq "#{test_server}/post" }
         its([:status_code]) { should eq 200 }
         its([:body]) { should eq '{"value": "222"}' }
         its([:header]) { should include("Content-Type" => ["text/plain;charset=utf-8"]) }

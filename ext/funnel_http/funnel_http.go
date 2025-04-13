@@ -44,6 +44,7 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 
 		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("status_code")), ruby.INT2NUM(response.StatusCode))
 		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("body")), ruby.String2Value(string(response.Body)))
+		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("url")), ruby.String2Value(string(response.URL)))
 
 		rbHashHeader := ruby.RbHashNew()
 		ruby.RbGcRegisterAddress(&rbHashHeader)
