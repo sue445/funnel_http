@@ -33,13 +33,13 @@ client = FunnelHttp::Client.new
 requests = [
   {
     method: :get,
-    uri: "https://example.com/api/user/1",
+    url: "https://example.com/api/user/1",
   },
 
   # with request header
   { 
-    method: :get, 
-    uri: "https://example.com/api/user/2", 
+    method: :get,
+    url: "https://example.com/api/user/2", 
     header: {
       "Authorization" => "Bearer xxxxxxxx",
       "X-Multiple-Values" => ["1st value", "2nd value"],
@@ -49,7 +49,7 @@ requests = [
   # with request body
   {
     method: :post,
-    uri: "https://example.com/api/user",
+    url: "https://example.com/api/user",
     header: {
       "Authorization" => "Bearer xxxxxxxx",
       "Content-Type" => "application/json",
