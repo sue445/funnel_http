@@ -10,6 +10,8 @@ module FunnelHttp
 
     def perform: (fuzzy_request | Array[fuzzy_request] requests) -> Array[response]
 
+    def perform!: (fuzzy_request | Array[fuzzy_request] requests) -> Array[response]
+
     def normalize_requests: (fuzzy_request | Array[fuzzy_request] arg) -> Array[strict_request]
 
     private

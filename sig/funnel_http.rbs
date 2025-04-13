@@ -2,9 +2,6 @@ module FunnelHttp
   VERSION: String
   USER_AGENT: String
 
-  class Error < StandardError
-  end
-
   type fuzzy_header = Hash[String, String | Array[String]]
 
   type fuzzy_request = {

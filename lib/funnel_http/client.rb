@@ -41,8 +41,44 @@ module FunnelHttp
     # @return [Integer] `:status_code`
     # @return [String] `:body` Response body
     # @return [Hash{String => Array<String>}] `:header` Response header
+    #
+    # @note `#perform` doesn't raise errors when http requests returns error status code (4xx, 5xx)
     def perform(requests)
       ext_client.run_requests(normalize_requests(requests))
+    end
+
+    # perform HTTP requests in parallel
+    #
+    # @overload perform(requests)
+    #   @param requests [Array<Hash{Symbol => Object}>] `Array` of following `Hash`
+    #   @option requests :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
+    #   @option requests :url [String] **[required]** Request url
+    #   @option requests :header [Hash{String => String, Array<String>}, nil] Request header
+    #   @option requests :body [String, nil] Request body
+    #
+    # @overload perform(request)
+    #   @param request [Hash{Symbol => Object}]
+    #   @option request :method [String, Symbol] **[required]** Request method (e.g. `:get`, `"POST"`)
+    #   @option request :url [String] **[required]** Request url
+    #   @option request :header [Hash{String => String, Array<String>}, nil] Request header
+    #   @option request :body [String, nil] Request body
+    #
+    # @return [Array<Hash<Symbol => Object>>] `Array` of following `Hash`
+    # @return [String] `:url` Request url
+    # @return [Integer] `:status_code`
+    # @return [String] `:body` Response body
+    # @return [Hash{String => Array<String>}] `:header` Response header
+    #
+    # @raise [FunnelHttp::HttpAggregateError] 1+ errors returned out of multiple requests
+    #
+    # @note `#perform!` raise errors when http requests returns error status code (4xx, 5xx)
+    def perform!(requests)
+      responses = perform(requests)
+
+      error_responses = responses.select { |res| res[:status_code] >= 400 }
+      raise HttpAggregateError, error_responses unless error_responses.empty?
+
+      responses
     end
 
     # @overload normalize_requests(requests)
