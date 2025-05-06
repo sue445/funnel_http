@@ -10,21 +10,24 @@ bundle exec ruby benchmark.rb
 
 ## Report
 ```
-go version go1.24.1 darwin/arm64
-ruby 3.4.1 (2024-12-25 revision 48d4efcb85) +PRISM [arm64-darwin24]
+go version go1.24.2 darwin/arm64
+ruby 3.4.3 (2025-04-14 revision d0b7e5b6a0) +PRISM [arm64-darwin24]
 Warming up --------------------------------------
           sequential     1.000 i/100ms
 FunnelHttp::Client#perform
                          2.000 i/100ms
+Parallel with Ractor     1.000 i/100ms
  Parallel with Fiber     1.000 i/100ms
 Calculating -------------------------------------
-          sequential      6.951 (± 0.0%) i/s  (143.86 ms/i) -     35.000 in   5.049849s
+          sequential      6.429 (±15.6%) i/s  (155.55 ms/i) -     32.000 in   5.074965s
 FunnelHttp::Client#perform
-                         22.720 (±48.4%) i/s   (44.01 ms/i) -     86.000 in   5.137729s
- Parallel with Fiber      3.699 (± 0.0%) i/s  (270.35 ms/i) -     19.000 in   5.177063s
+                         25.100 (±35.9%) i/s   (39.84 ms/i) -    102.000 in   5.147337s
+Parallel with Ractor      5.353 (±18.7%) i/s  (186.81 ms/i) -     23.000 in   9.159340s
+ Parallel with Fiber      4.147 (±48.2%) i/s  (241.16 ms/i) -     18.000 in   5.046421s
 
 Comparison:
-FunnelHttp::Client#perform:       22.7 i/s
-          sequential:        7.0 i/s - 3.27x  slower
- Parallel with Fiber:        3.7 i/s - 6.14x  slower
+FunnelHttp::Client#perform:       25.1 i/s
+          sequential:        6.4 i/s - 3.90x  slower
+Parallel with Ractor:        5.4 i/s - 4.69x  slower
+ Parallel with Fiber:        4.1 i/s - 6.05x  slower
 ```

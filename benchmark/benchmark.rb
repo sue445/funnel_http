@@ -1,6 +1,9 @@
 require "benchmark/ips"
 require "open-uri"
 
+require "openssl"
+require "net/https"
+
 ROOT_DIR = File.expand_path("..", __dir__)
 
 TEST_SERVER_URL = ENV.fetch("TEST_SERVER_URL") { "http://localhost:8080/" }.freeze
@@ -27,8 +30,34 @@ sh "go version"
 
 requests = Array.new(REQUEST_COUNT, { method: :get, url: TEST_SERVER_URL })
 
+Ractor.make_shareable OpenSSL::SSL::SSLContext::DEFAULT_PARAMS
+Ractor.make_shareable Net::HTTP::SSL_IVNAMES
+Ractor.make_shareable Net::HTTP::SSL_ATTRIBUTES
+Ractor.make_shareable Net::HTTPResponse::CODE_TO_OBJ
+
 def fetch_server
-  URI.parse(TEST_SERVER_URL).open(open_timeout: 90, read_timeout: 90).read
+  # URI.parse(TEST_SERVER_URL).open(open_timeout: 90, read_timeout: 90).read
+
+  # FIXME: Workaround for unavailability of net/http in Ractor
+  # c.f. https://osyoyu.com/blog/2025/05/06/005706
+  uri = URI.parse(TEST_SERVER_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+
+  if uri.scheme == "https"
+    http.use_ssl = true
+
+    # OpenSSL::SSL::SSLContext::DEFAULT_CERT_STORE cannot be shareable, so create an equivalent
+    # https://github.com/ruby/openssl/issues/521
+    cert_store = OpenSSL::X509::Store.new
+    cert_store.set_default_paths
+    cert_store.flags = OpenSSL::X509::V_FLAG_CRL_CHECK_ALL
+    http.cert_store = cert_store
+  end
+
+  # Do not touch Timeout::TIMEOUT_THREAD_MUTEX (Ractor unshareable)
+  http.open_timeout = nil
+
+  http.get(uri.path)
 end
 
 Benchmark.ips do |x|
@@ -44,12 +73,11 @@ Benchmark.ips do |x|
     FunnelHttp::Client.new.perform(requests)
   end
 
-  # FIXME: open-uri and net/http doesn't work in Ractor
-  # x.report("Parallel with Ractor") do
-  #   REQUEST_COUNT.times.map do
-  #     Ractor.new { fetch_server }
-  #   end.each(&:take)
-  # end
+  x.report("Parallel with Ractor") do
+    REQUEST_COUNT.times.map do
+      Ractor.new { fetch_server }
+    end.each(&:take)
+  end
 
   x.report("Parallel with Fiber") do
     REQUEST_COUNT.times.map do
