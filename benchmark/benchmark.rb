@@ -57,11 +57,15 @@ def fetch_server
   # Do not touch Timeout::TIMEOUT_THREAD_MUTEX (Ractor unshareable)
   http.open_timeout = nil
 
-  http.get(uri.path)
+  res = http.get(uri.path)
+  res.body
 end
 
 Benchmark.ips do |x|
-  x.config(warmup: 2, time: 5)
+  # FIXME: `open_timeout = 90` is required for following error, but this couldn't change in Ractor...
+  #        'TCPSocket#initialize': Failed to open TCP connection to localhost:8080 (connect(2) for "localhost" port 8080) (IO::TimeoutError)
+  # x.config(warmup: 2, time: 5)
+  x.config(warmup: 1, time: 3)
 
   x.report("sequential") do
     REQUEST_COUNT.times do
