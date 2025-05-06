@@ -89,7 +89,7 @@ client.add_default_request_header("Authorization", "Bearer xxxxxx")
 https://sue445.github.io/funnel_http/
 
 ## Performance
-Depending on the case, `funnel_http` runs about 1.2x faster than pure-Ruby `Thread` :dash:
+Depending on the case, `funnel_http` runs about 1.8x faster than pure-Ruby `Ractor` :dash:
 
 See [benchmark/](benchmark/)
 
