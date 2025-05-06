@@ -15,19 +15,19 @@ ruby 3.4.3 (2025-04-14 revision d0b7e5b6a0) +PRISM [arm64-darwin24]
 Warming up --------------------------------------
           sequential     1.000 i/100ms
 FunnelHttp::Client#perform
-                         2.000 i/100ms
+                         3.000 i/100ms
 Parallel with Ractor     1.000 i/100ms
  Parallel with Fiber     1.000 i/100ms
 Calculating -------------------------------------
-          sequential      6.429 (±15.6%) i/s  (155.55 ms/i) -     32.000 in   5.074965s
+          sequential      7.075 (±14.1%) i/s  (141.35 ms/i) -     21.000 in   3.149242s
 FunnelHttp::Client#perform
-                         25.100 (±35.9%) i/s   (39.84 ms/i) -    102.000 in   5.147337s
-Parallel with Ractor      5.353 (±18.7%) i/s  (186.81 ms/i) -     23.000 in   9.159340s
- Parallel with Fiber      4.147 (±48.2%) i/s  (241.16 ms/i) -     18.000 in   5.046421s
+                         31.001 (± 6.5%) i/s   (32.26 ms/i) -     93.000 in   3.020308s
+Parallel with Ractor     16.888 (±29.6%) i/s   (59.21 ms/i) -     47.000 in   3.014063s
+ Parallel with Fiber      6.406 (±31.2%) i/s  (156.10 ms/i) -     17.000 in   3.229245s
 
 Comparison:
-FunnelHttp::Client#perform:       25.1 i/s
-          sequential:        6.4 i/s - 3.90x  slower
-Parallel with Ractor:        5.4 i/s - 4.69x  slower
- Parallel with Fiber:        4.1 i/s - 6.05x  slower
+FunnelHttp::Client#perform:       31.0 i/s
+Parallel with Ractor:       16.9 i/s - 1.84x  slower
+          sequential:        7.1 i/s - 4.38x  slower
+ Parallel with Fiber:        6.4 i/s - 4.84x  slower
 ```
