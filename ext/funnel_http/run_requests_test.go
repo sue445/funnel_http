@@ -11,8 +11,7 @@ import (
 )
 
 func TestRunRequests(t *testing.T) {
-	httpmock.Activate()
-	t.Cleanup(httpmock.DeactivateAndReset)
+	httpmock.Activate(t)
 
 	httpmock.RegisterResponder("GET", "http://example.com/1",
 		func(req *http.Request) (*http.Response, error) {
