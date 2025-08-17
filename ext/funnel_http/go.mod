@@ -7,7 +7,7 @@ toolchain go1.24.0
 require (
 	github.com/cockroachdb/errors v1.12.0
 	github.com/jarcoal/httpmock v1.4.0
-	github.com/ruby-go-gem/go-gem-wrapper v0.7.3
+	github.com/ruby-go-gem/go-gem-wrapper v0.8.0
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/sync v0.16.0
 )
