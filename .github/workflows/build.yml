@@ -141,6 +141,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v5
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+          bundler-cache: true
+
+      - name: export CGO_CFLAGS for golangci-lint
+        run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
+
       - uses: golang/govulncheck-action@v1
         with:
           go-version-file: ext/funnel_http/go.mod
