@@ -154,11 +154,11 @@ jobs:
           ruby-version: ruby
           bundler-cache: true
 
-      - name: export CGO_CFLAGS for golangci-lint
+      - name: export CGO_CFLAGS for govulncheck
         run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
       - run: echo $CGO_CFLAGS
 
-      - name: export BUILD_TAG for golangci-lint
+      - name: export BUILD_TAG for govulncheck
         run: echo "BUILD_TAG=$(bundle exec rake go:build_tag)" >> $GITHUB_ENV
       - run: echo $BUILD_TAG
 
