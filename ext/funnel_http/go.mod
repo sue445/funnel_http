@@ -1,6 +1,6 @@
 module github.com/sue445/funnel_http
 
-go 1.24.0
+go 1.24.4
 
 require (
 	github.com/cockroachdb/errors v1.12.0
