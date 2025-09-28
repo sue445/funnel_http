@@ -150,6 +150,7 @@ jobs:
 
       - name: export CGO_CFLAGS for golangci-lint
         run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
+      - run: echo $CGO_CFLAGS
 
       - uses: golang/govulncheck-action@v1
         with:
