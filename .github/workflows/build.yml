@@ -143,6 +143,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: ext/funnel_http/go.mod
+          cache: true
+      - run: go install golang.org/x/vuln/cmd/govulncheck@latest
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ruby
@@ -161,11 +167,6 @@ jobs:
       #   with:
       #     go-version-file: ext/funnel_http/go.mod
       #     work-dir: ext/funnel_http/
-      - uses: actions/setup-go@v6
-        with:
-          go-version-file: ext/funnel_http/go.mod
-          cache: true
-      - run: go install golang.org/x/vuln/cmd/govulncheck@latest
       - run: govulncheck -C ext/funnel_http/ -format text -tags "${BUILD_TAG}" ./...
 
       - name: Slack Notification (not success)
