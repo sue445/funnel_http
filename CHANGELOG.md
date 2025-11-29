@@ -1,5 +1,12 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.3...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.4...main)
+
+## [0.5.4](https://github.com/sue445/funnel_http/releases/tag/v0.5.4) - 2025-11-29
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.3...v0.5.4)
+
+* Release gem from GitHub Actions
+  * https://github.com/sue445/funnel_http/pull/117
+* Update Go dependencies
 
 ## [0.5.3](https://github.com/sue445/funnel_http/releases/tag/v0.5.3) - 2025-11-01
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.5.2...v0.5.3)
