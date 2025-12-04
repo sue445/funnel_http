@@ -1,5 +1,12 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.4...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.5...main)
+
+## [0.5.5](https://github.com/sue445/funnel_http/releases/tag/v0.5.5) - 2025-11-29
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.4...v0.5.5)
+
+* [CVE-2025-61727][CVE-2025-61729] Requires Go 1.24.11
+  * https://github.com/sue445/funnel_http/pull/127
+* Update Go dependencies
 
 ## [0.5.4](https://github.com/sue445/funnel_http/releases/tag/v0.5.4) - 2025-11-29
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.5.3...v0.5.4)
