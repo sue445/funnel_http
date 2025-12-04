@@ -2,16 +2,20 @@
 
 version: 2
 updates:
+  ###########################################################
+  # NOTE: following sections are auto generated. DO NOT EDIT!
+  ###########################################################
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
       time: "05:00"
       timezone: Asia/Tokyo
-    cooldown:
-      default-days: 7
     assignees:
       - sue445
+    cooldown:
+      default-days: 7
+  ###########################################################
 
   - package-ecosystem: gomod
     directory: /ext/funnel_http/
@@ -19,8 +23,7 @@ updates:
       interval: weekly
       time: "05:00"
       timezone: Asia/Tokyo
-    cooldown:
-      default-days: 7
-    open-pull-requests-limit: 99
     assignees:
       - sue445
+    cooldown:
+      default-days: 7
