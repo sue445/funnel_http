@@ -16,14 +16,14 @@ updates:
     cooldown:
       default-days: 7
   ###########################################################
+
   - package-ecosystem: gomod
     directory: /ext/funnel_http/
     schedule:
       interval: weekly
       time: "05:00"
       timezone: Asia/Tokyo
-    cooldown:
-      default-days: 7
-    open-pull-requests-limit: 99
     assignees:
       - sue445
+    cooldown:
+      default-days: 7
