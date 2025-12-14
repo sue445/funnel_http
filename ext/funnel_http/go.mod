@@ -7,7 +7,7 @@ require (
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/ruby-go-gem/go-gem-wrapper v0.10.1
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/sync v0.18.0
+	golang.org/x/sync v0.19.0
 )
 
 require (
