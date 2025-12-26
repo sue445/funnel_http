@@ -11,6 +11,7 @@ jobs:
     with:
       assignees: sue445
       auto-merge: true
+      ruby-version: .tool-versions
     secrets:
       app-id: ${{ secrets.GH_APP_ID }}
       private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
