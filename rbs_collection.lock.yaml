@@ -6,15 +6,19 @@ gems:
   source:
     type: rubygems
 - name: cgi
-  version: '0'
+  version: '0.5'
   source:
-    type: stdlib
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: d6e4d19ad6117272766c58412953cc5ec561a294
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
 - name: diff-lcs
   version: '1.5'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 3a33fa6f8e486f880c80ca401f2be1c1f621cf11
+    revision: d6e4d19ad6117272766c58412953cc5ec561a294
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
@@ -34,7 +38,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 3a33fa6f8e486f880c80ca401f2be1c1f621cf11
+    revision: d6e4d19ad6117272766c58412953cc5ec561a294
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rake
@@ -42,7 +46,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 3a33fa6f8e486f880c80ca401f2be1c1f621cf11
+    revision: d6e4d19ad6117272766c58412953cc5ec561a294
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: sinatra
@@ -50,7 +54,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 3a33fa6f8e486f880c80ca401f2be1c1f621cf11
+    revision: d6e4d19ad6117272766c58412953cc5ec561a294
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: stringio
