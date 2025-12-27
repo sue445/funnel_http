@@ -29,3 +29,5 @@ updates:
       - sue445
     cooldown:
       default-days: 7
+      exclude:
+        - github.com/ruby-go-gem/go-gem-wrapper
