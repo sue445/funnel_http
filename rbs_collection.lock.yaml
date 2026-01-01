@@ -10,7 +10,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d6e4d19ad6117272766c58412953cc5ec561a294
+    revision: 57196ee070a59a2dfd64f9f91a3f974a9a5afea8
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: diff-lcs
@@ -18,10 +18,14 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d6e4d19ad6117272766c58412953cc5ec561a294
+    revision: 57196ee070a59a2dfd64f9f91a3f974a9a5afea8
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
+  version: '0'
+  source:
+    type: stdlib
+- name: io-console
   version: '0'
   source:
     type: stdlib
@@ -33,12 +37,20 @@ gems:
   version: '0'
   source:
     type: stdlib
+- name: pp
+  version: '0'
+  source:
+    type: stdlib
+- name: prettyprint
+  version: '0'
+  source:
+    type: stdlib
 - name: rack
   version: '2.2'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d6e4d19ad6117272766c58412953cc5ec561a294
+    revision: 57196ee070a59a2dfd64f9f91a3f974a9a5afea8
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rake
@@ -46,15 +58,19 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d6e4d19ad6117272766c58412953cc5ec561a294
+    revision: 57196ee070a59a2dfd64f9f91a3f974a9a5afea8
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: rdoc
+  version: '0'
+  source:
+    type: stdlib
 - name: sinatra
   version: '4.0'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d6e4d19ad6117272766c58412953cc5ec561a294
+    revision: 57196ee070a59a2dfd64f9f91a3f974a9a5afea8
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: stringio
