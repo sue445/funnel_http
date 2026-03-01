@@ -10,7 +10,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5aeae33367fa324abf3a4ef912f4e27aaf17f6b9
+    revision: 1acc2fda1726ddac0bd60c4da369ce7266479413
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: diff-lcs
@@ -18,7 +18,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5aeae33367fa324abf3a4ef912f4e27aaf17f6b9
+    revision: 1acc2fda1726ddac0bd60c4da369ce7266479413
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
@@ -45,12 +45,16 @@ gems:
   version: '0'
   source:
     type: stdlib
+- name: prism
+  version: 1.9.0
+  source:
+    type: rubygems
 - name: rack
   version: '2.2'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5aeae33367fa324abf3a4ef912f4e27aaf17f6b9
+    revision: 1acc2fda1726ddac0bd60c4da369ce7266479413
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rake
@@ -58,7 +62,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5aeae33367fa324abf3a4ef912f4e27aaf17f6b9
+    revision: 1acc2fda1726ddac0bd60c4da369ce7266479413
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rdoc
@@ -70,7 +74,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5aeae33367fa324abf3a4ef912f4e27aaf17f6b9
+    revision: 1acc2fda1726ddac0bd60c4da369ce7266479413
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: stringio
