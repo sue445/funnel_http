@@ -6,7 +6,9 @@ Perform HTTP requests in parallel with goroutine
 
 ## Requirements
 * Ruby
+  * See `required_ruby_version` in [funnel_http.gemspec](funnel_http.gemspec)
 * Go
+  * See `go` directive in [ext/funnel_http/go.mod](ext/funnel_http/go.mod)
 
 ## Installation
 
