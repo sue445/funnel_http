@@ -10,15 +10,19 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5689759efdc7875d533e8e5b2376b4ab89472e36
+    revision: bc8394e60b1d20e2332104e60b64b283d025be57
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: delegate
+  version: '0'
+  source:
+    type: stdlib
 - name: diff-lcs
   version: '1.5'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5689759efdc7875d533e8e5b2376b4ab89472e36
+    revision: bc8394e60b1d20e2332104e60b64b283d025be57
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
@@ -34,7 +38,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5689759efdc7875d533e8e5b2376b4ab89472e36
+    revision: bc8394e60b1d20e2332104e60b64b283d025be57
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: monitor
@@ -58,7 +62,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5689759efdc7875d533e8e5b2376b4ab89472e36
+    revision: bc8394e60b1d20e2332104e60b64b283d025be57
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rake
@@ -66,7 +70,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5689759efdc7875d533e8e5b2376b4ab89472e36
+    revision: bc8394e60b1d20e2332104e60b64b283d025be57
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rdoc
@@ -78,7 +82,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 5689759efdc7875d533e8e5b2376b4ab89472e36
+    revision: bc8394e60b1d20e2332104e60b64b283d025be57
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: stringio
@@ -86,6 +90,10 @@ gems:
   source:
     type: stdlib
 - name: tempfile
+  version: '0'
+  source:
+    type: stdlib
+- name: tmpdir
   version: '0'
   source:
     type: stdlib
