@@ -4,7 +4,7 @@ go 1.25.12
 
 require (
 	github.com/cockroachdb/errors v1.14.0
-	github.com/jarcoal/httpmock v1.4.1
+	github.com/jarcoal/httpmock v1.4.2
 	github.com/ruby-go-gem/go-gem-wrapper v0.11.0
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/sync v0.22.0
