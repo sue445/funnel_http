@@ -1,5 +1,12 @@
 ## [Unreleased]
-[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.12...main)
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.13...main)
+
+## [0.5.13](https://github.com/sue445/funnel_http/releases/tag/v0.5.13) - 2026-08-23
+[full changelog](http://github.com/sue445/funnel_http/compare/v0.5.12...v0.5.13)
+
+* Migrate release_gem workflow to sue445/workflows (Also testing the gem release)
+  * https://github.com/sue445/funnel_http/pull/206
+* Update Go dependencies
 
 ## [0.5.12](https://github.com/sue445/funnel_http/releases/tag/v0.5.12) - 2026-08-14
 [full changelog](http://github.com/sue445/funnel_http/compare/v0.5.11...v0.5.12)
