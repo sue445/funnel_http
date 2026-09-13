@@ -38,9 +38,10 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 		ruby.RbRaise(rb_cFunnelHttpError, "%s", err.Error())
 	}
 
-	var rbHashSlice []ruby.VALUE
-	for _, response := range responses {
+	rbHashSlice := make([]ruby.VALUE, len(responses))
+	for i, response := range responses {
 		rbHash := ruby.RbHashNew()
+		ruby.RbGcRegisterAddress(&rbHash)
 
 		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("status_code")), ruby.INT2NUM(response.StatusCode))
 		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("body")), ruby.String2Value(string(response.Body)))
@@ -48,33 +49,45 @@ func rb_funnel_http_run_requests(self C.VALUE, rbAry C.VALUE) C.VALUE {
 
 		rbHashHeader := ruby.RbHashNew()
 		ruby.RbGcRegisterAddress(&rbHashHeader)
-		defer ruby.RbGcUnregisterAddress(&rbHashHeader)
 
 		for key, values := range response.Header {
-			var headerValues []ruby.VALUE
-			for _, value := range values {
-				v := ruby.String2Value(value)
-				ruby.RbGcRegisterAddress(&v)
-				defer ruby.RbGcUnregisterAddress(&v)
-
-				headerValues = append(headerValues, v)
+			headerValues := make([]ruby.VALUE, len(values))
+			for j, value := range values {
+				headerValues[j] = ruby.String2Value(value)
+				ruby.RbGcRegisterAddress(&headerValues[j])
 			}
+
 			k := ruby.String2Value(key)
 			ruby.RbGcRegisterAddress(&k)
-			defer ruby.RbGcUnregisterAddress(&k)
 
 			v := ruby.Slice2rbAry(headerValues)
 			ruby.RbGcRegisterAddress(&v)
-			defer ruby.RbGcUnregisterAddress(&v)
 
 			ruby.RbHashAset(rbHashHeader, k, v)
-		}
-		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("header")), rbHashHeader)
 
-		rbHashSlice = append(rbHashSlice, rbHash)
+			ruby.RbGcUnregisterAddress(&v)
+			ruby.RbGcUnregisterAddress(&k)
+
+			for j := range headerValues {
+				ruby.RbGcUnregisterAddress(&headerValues[j])
+			}
+		}
+
+		ruby.RbHashAset(rbHash, ruby.RbId2Sym(ruby.RbIntern("header")), rbHashHeader)
+		ruby.RbGcUnregisterAddress(&rbHashHeader)
+
+		rbHashSlice[i] = rbHash
+		ruby.RbGcRegisterAddress(&rbHashSlice[i])
+		ruby.RbGcUnregisterAddress(&rbHash)
 	}
 
-	return C.VALUE(ruby.Slice2rbAry(rbHashSlice))
+	rbResponseAry := ruby.Slice2rbAry(rbHashSlice)
+
+	for i := range rbHashSlice {
+		ruby.RbGcUnregisterAddress(&rbHashSlice[i])
+	}
+
+	return C.VALUE(rbResponseAry)
 }
 
 func getHttpClientFromInstanceVariable(self ruby.VALUE) http.Client {
@@ -92,8 +105,7 @@ func getHttpClientFromInstanceVariable(self ruby.VALUE) http.Client {
 	data := ruby.GetGoStruct(obj)
 
 	// Save FunnelHttp::Ext::GoData to instance variable of FunnelHttp::Ext::Client
-	dataValue := (*ruby.VALUE)(data)
-	ruby.RbIvarSet(self, id, *dataValue)
+	ruby.RbIvarSet(self, id, obj)
 
 	return ((*goData)(data)).httpClient
 }
