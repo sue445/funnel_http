@@ -35,6 +35,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+          cache-version: v1-${{ matrix.ruby }}-${{ matrix.go }}
 
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
@@ -75,6 +76,7 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
+          cache-version: v1-${{ hashFiles('/.tool-versions') }}
 
       - name: bundle update
         run: |
@@ -104,6 +106,7 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
+          cache-version: v1-${{ hashFiles('/.tool-versions') }}
 
       - name: bundle update
         run: |
@@ -139,6 +142,7 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
+          cache-version: v1-${{ hashFiles('/.tool-versions', '/ext/**/go.mod') }}
 
       - name: export CGO_CFLAGS for golangci-lint
         run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
@@ -181,6 +185,7 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
+          cache-version: v1-${{ hashFiles('/.tool-versions', '/ext/**/go.mod') }}
 
       - name: export CGO_CFLAGS for govulncheck
         run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
