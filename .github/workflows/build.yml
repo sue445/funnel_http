@@ -142,7 +142,7 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
-          cache-version: v1-${{ hashFiles('/.tool-versions', '/ext/**/go.mod') }}
+          cache-version: v1-${{ hashFiles('/.tool-versions', '/ext/**/go.sum') }}
 
       - name: export CGO_CFLAGS for golangci-lint
         run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
@@ -185,7 +185,7 @@ jobs:
         with:
           ruby-version: .tool-versions
           bundler-cache: true
-          cache-version: v1-${{ hashFiles('/.tool-versions', '/ext/**/go.mod') }}
+          cache-version: v1-${{ hashFiles('/.tool-versions', '/ext/**/go.sum') }}
 
       - name: export CGO_CFLAGS for govulncheck
         run: bundle exec rake go:build_envs[CGO_CFLAGS] >> $GITHUB_ENV
