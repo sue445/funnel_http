@@ -5,24 +5,12 @@ gems:
   version: 0.3.0
   source:
     type: rubygems
-- name: cgi
-  version: '0.5'
-  source:
-    type: git
-    name: ruby/gem_rbs_collection
-    revision: 904dc25dace6f10aac76ca29dd0ee6ed299a7282
-    remote: https://github.com/ruby/gem_rbs_collection.git
-    repo_dir: gems
-- name: delegate
-  version: '0'
-  source:
-    type: stdlib
 - name: diff-lcs
   version: '1.5'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 904dc25dace6f10aac76ca29dd0ee6ed299a7282
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
@@ -38,7 +26,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 904dc25dace6f10aac76ca29dd0ee6ed299a7282
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: monitor
@@ -58,11 +46,19 @@ gems:
   source:
     type: rubygems
 - name: rack
-  version: '2.2'
+  version: '3.2'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 904dc25dace6f10aac76ca29dd0ee6ed299a7282
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
+- name: rack-session
+  version: '2.1'
+  source:
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rake
@@ -70,33 +66,29 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 904dc25dace6f10aac76ca29dd0ee6ed299a7282
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rdoc
   version: '0'
   source:
     type: stdlib
+- name: redcarpet
+  version: '3.6'
+  source:
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
 - name: sinatra
   version: '4.0'
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 904dc25dace6f10aac76ca29dd0ee6ed299a7282
+    revision: 66dcfa5e7edc577908f9c8fcd76f705f93fbd7cb
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
-- name: stringio
-  version: '0'
-  source:
-    type: stdlib
-- name: tempfile
-  version: '0'
-  source:
-    type: stdlib
-- name: tmpdir
-  version: '0'
-  source:
-    type: stdlib
 - name: uri
   version: '0'
   source:
